@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>男娘指数测试 · Femboy Index Test</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  /* ============ 背景极光 ============ */
+  .bg{position:fixed;inset:0;z-index:-1;overflow:hidden;
+      background:linear-gradient(140deg,#fff4fa 0%,#f6efff 48%,#eef6ff 100%)}
+  .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.6;pointer-events:none}
+  .b1{width:440px;height:440px;background:radial-gradient(circle,#ff9ecb,transparent 70%);
+      top:-150px;left:-120px;animation:drift1 20s ease-in-out infinite}
+  .b2{width:500px;height:500px;background:radial-gradient(circle,#b89cff,transparent 70%);
+      bottom:-180px;right:-130px;animation:drift2 24s ease-in-out infinite}
+  .b3{width:360px;height:360px;background:radial-gradient(circle,#8ac4ff,transparent 70%);
+      top:38%;left:52%;animation:drift3 26s ease-in-out infinite}
+  @keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(80px,70px) scale(1.15)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-70px,-60px) scale(1.12)}}
+  @keyframes drift3{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-42%,-62%) scale(1.2)}}
+
+  .float-emoji{
+    position:fixed;z-index:-1;pointer-events:none;
+    font-size:22px;opacity:.25;filter:blur(.3px);
+    animation:floatUp linear infinite;
+  }
+  @keyframes floatUp{
+    0%{transform:translateY(110vh) rotate(0deg);opacity:0}
+    10%{opacity:.28}
+    90%{opacity:.28}
+    100%{transform:translateY(-10vh) rotate(360deg);opacity:0}
+  }
+
+  body{
+    min-height:100vh;display:flex;align-items:flex-start;justify-content:center;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    color:#2b2b33;padding:40px 16px;
+  }
+  .app{
+    width:100%;max-width:660px;position:relative;
+    background:rgba(255,255,255,.66);
+    backdrop-filter:blur(26px) saturate(1.6);
+    -webkit-backdrop-filter:blur(26px) saturate(1.6);
+    border-radius:32px;padding:38px 34px 30px;
+    border:1px solid rgba(255,255,255,.9);
+    box-shadow:
+      0 24px 60px rgba(180,120,180,.16),
+      0 2px 8px rgba(0,0,0,.04),
+      inset 0 1px 0 rgba(255,255,255,.9);
+  }
+  .hidden{display:none!important}
+
+  /* ============ 语言按钮 ============ */
+  .lang-btn{
+    position:absolute;top:16px;right:16px;z-index:5;
+    display:inline-flex;align-items:center;gap:5px;
+    padding:6px 13px;border-radius:99px;
+    background:rgba(255,255,255,.85);
+    border:1px solid rgba(224,80,143,.22);
+    color:#c23d78;font-family:inherit;
+    font-size:11.5px;font-weight:700;letter-spacing:.8px;
+    cursor:pointer;
+    box-shadow:0 3px 12px rgba(224,80,143,.12);
+    transition:all .22s cubic-bezier(.3,1,.4,1);
+    animation:fadeUp .6s cubic-bezier(.2,.8,.3,1) backwards;
+  }
+  .lang-btn:hover{
+    background:#fff;
+    border-color:#e0508f;
+    transform:translateY(-1px);
+    box-shadow:0 6px 16px rgba(224,80,143,.22);
+  }
+  .lang-btn:active{transform:scale(.96)}
+
+  /* ============ 开始页 ============ */
+  #screen-start{display:flex;flex-direction:column;gap:18px}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+  .hero{
+    display:flex;flex-direction:column;align-items:center;
+    gap:16px;padding-top:2px;
+  }
+  .hero > *{animation:fadeUp .7s cubic-bezier(.2,.8,.3,1) backwards}
+  .hero > *:nth-child(1){animation-delay:.05s}
+  .hero > *:nth-child(2){animation-delay:.14s}
+  .hero > *:nth-child(3){animation-delay:.23s}
+
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:7px;
+    width:fit-content;
+    padding:6px 15px;border-radius:99px;
+    background:rgba(255,255,255,.8);
+    border:1px solid rgba(255,255,255,.95);
+    font-size:11.5px;color:#c23d78;letter-spacing:2px;font-weight:600;
+    box-shadow:0 4px 16px rgba(224,80,143,.14);
+  }
+  .hero-badge::before{content:'✦';font-size:9px;opacity:.65}
+  .hero-badge::after{content:'✦';font-size:9px;opacity:.65}
+
+  .title-wrap{
+    display:inline-flex;align-items:center;justify-content:center;
+    gap:14px;white-space:nowrap;
+  }
+  .hero-title{
+    font-size:36px;font-weight:800;letter-spacing:3px;line-height:1.25;
+    background:linear-gradient(120deg,#e0508f 0%,#a06ae0 45%,#e0508f 90%);
+    background-size:220% 100%;
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:shimmer 7s linear infinite;
+    padding-left:3px;
+  }
+  @keyframes shimmer{0%{background-position:0% 50%}100%{background-position:220% 50%}}
+
+  .float-deco{
+    flex:0 0 auto;font-size:20px;line-height:1;
+    filter:drop-shadow(0 4px 8px rgba(224,80,143,.3));
+    animation:floatY 3.4s ease-in-out infinite;
+  }
+  .float-deco.r{animation-delay:.55s}
+  @keyframes floatY{
+    0%,100%{transform:translateY(0) rotate(-8deg)}
+    50%{transform:translateY(-8px) rotate(6deg)}
+  }
+
+  .hero-sub{
+    font-size:13.5px;color:#9a8fa0;letter-spacing:.5px;line-height:1.7;
+    text-align:center;
+  }
+
+  .stats{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    animation:fadeUp .7s cubic-bezier(.2,.8,.3,1) .32s backwards;
+  }
+  .stat{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    min-height:82px;padding:14px 10px;
+    background:rgba(255,255,255,.75);
+    border:1px solid rgba(255,255,255,.95);
+    border-radius:18px;
+    box-shadow:0 4px 16px rgba(180,140,200,.08);
+    transition:transform .25s cubic-bezier(.3,1,.4,1),box-shadow .25s;
+    position:relative;
+  }
+  .stat::after{
+    content:attr(data-emoji);
+    position:absolute;top:-9px;right:10px;font-size:14px;
+    opacity:0;transform:scale(.5);
+    transition:all .3s cubic-bezier(.3,1.6,.5,1);
+  }
+  .stat:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(180,140,200,.16)}
+  .stat:hover::after{opacity:1;transform:scale(1) rotate(15deg)}
+  .stat b{
+    font-size:26px;font-weight:800;line-height:1.1;
+    background:linear-gradient(135deg,#e0508f,#a06ae0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .stat span{font-size:11px;color:#a89db0;letter-spacing:.8px;margin-top:6px;line-height:1}
+
+  .features{
+    list-style:none;
+    padding:18px 22px;
+    background:rgba(255,255,255,.6);
+    border:1px solid rgba(255,255,255,.92);
+    border-radius:18px;
+    animation:fadeUp .7s cubic-bezier(.2,.8,.3,1) .41s backwards;
+  }
+  .features li{
+    display:flex;align-items:flex-start;gap:10px;
+    font-size:13px;color:#6b6470;line-height:1.65;
+    padding:8px 0;
+  }
+  .features li + li{border-top:1px dashed rgba(224,80,143,.1)}
+  .features li::before{
+    content:'♡';flex:0 0 auto;
+    font-size:14px;line-height:1.5;
+    color:#ff8ec4;
+    text-shadow:0 0 8px rgba(255,142,196,.6);
+  }
+
+  .statement{
+    border-radius:18px;
+    background:rgba(255,255,255,.55);
+    border:1px solid rgba(255,255,255,.92);
+    overflow:hidden;
+    animation:fadeUp .7s cubic-bezier(.2,.8,.3,1) .45s backwards;
+  }
+  .stmt-head{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    width:100%;padding:13px 18px;
+    background:none;border:none;cursor:pointer;
+    font-family:inherit;font-size:12.5px;font-weight:600;
+    color:#c23d78;letter-spacing:.6px;text-align:left;
+    transition:background .2s;
+  }
+  .stmt-head:hover{background:rgba(255,236,246,.6)}
+  .stmt-head .ttl{display:flex;align-items:center;gap:8px}
+  .stmt-head .arrow{
+    flex:0 0 auto;font-size:9px;color:#d99ab8;
+    transition:transform .35s cubic-bezier(.3,1,.4,1);
+  }
+  .statement.open .stmt-head .arrow{transform:rotate(180deg)}
+  .stmt-body{
+    max-height:0;overflow:hidden;
+    transition:max-height .45s cubic-bezier(.3,1,.4,1);
+  }
+  .statement.open .stmt-body{max-height:640px}
+  .stmt-inner{
+    padding:14px 18px 16px;
+    border-top:1px dashed rgba(224,80,143,.16);
+  }
+  .stmt-inner p{
+    font-size:12.5px;line-height:1.9;color:#6b6470;text-align:left;
+  }
+  .stmt-inner p + p{margin-top:9px}
+  .stmt-inner .sig{
+    margin-top:11px;text-align:right;
+    font-size:11.5px;font-weight:600;color:#b07aa0;letter-spacing:.5px;
+  }
+
+  .btn-start{
+    position:relative;display:block;width:100%;
+    padding:17px;border:none;border-radius:18px;
+    background:linear-gradient(135deg,#ff6bb5 0%,#e0508f 45%,#a06ae0 100%);
+    background-size:200% 200%;
+    color:#fff;font-size:16.5px;font-weight:700;letter-spacing:4px;
+    cursor:pointer;font-family:inherit;overflow:hidden;
+    box-shadow:0 10px 28px rgba(224,80,143,.36),inset 0 1px 0 rgba(255,255,255,.28);
+    transition:transform .3s cubic-bezier(.3,1,.4,1),box-shadow .3s,background-position .5s;
+    animation:
+      fadeUp .7s cubic-bezier(.2,.8,.3,1) .5s backwards,
+      btnPulse 3.2s ease-in-out .9s infinite alternate;
+  }
+  .btn-start:hover{
+    transform:translateY(-2px);
+    background-position:100% 50%;
+    box-shadow:0 16px 36px rgba(224,80,143,.46),inset 0 1px 0 rgba(255,255,255,.3);
+  }
+  .btn-start:active{transform:translateY(0) scale(.99)}
+  .btn-start::after{
+    content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.38) 50%,transparent 65%);
+    background-size:220% 100%;
+    animation:shine 3.4s ease-in-out infinite;
+  }
+  @keyframes shine{0%,100%{background-position:-120% 0}50%{background-position:220% 0}}
+  @keyframes btnPulse{
+    from{box-shadow:0 10px 28px rgba(224,80,143,.34),inset 0 1px 0 rgba(255,255,255,.28)}
+    to{box-shadow:0 10px 34px rgba(160,106,224,.46),inset 0 1px 0 rgba(255,255,255,.28)}
+  }
+  .app.lang-en .btn-start{letter-spacing:2px}
+
+  .start-foot{
+    font-size:11.5px;color:#c0b4c4;letter-spacing:.8px;
+    text-align:center;
+    animation:fadeUp .7s cubic-bezier(.2,.8,.3,1) .58s backwards;
+  }
+  .start-foot::before{content:'♡ ';color:#ff8ec4}
+  .start-foot::after{content:' ♡';color:#ff8ec4}
+
+  /* ============ 通用按钮 ============ */
+  .btn{
+    display:block;width:100%;padding:15px;border:none;border-radius:16px;
+    background:linear-gradient(90deg,#e0508f,#c23d78);color:#fff;
+    font-size:16px;font-weight:600;cursor:pointer;font-family:inherit;
+    box-shadow:0 8px 20px rgba(224,80,143,.32);transition:.2s;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(224,80,143,.4)}
+  .btn.ghost{
+    background:#fff;color:#a080a0;border:2px solid #efe6f0;
+    box-shadow:none;font-weight:500;
+  }
+  .btn.ghost:hover{border-color:#e8c8dc;transform:none;box-shadow:none}
+  .btn.ghost:disabled{opacity:.35;cursor:not-allowed}
+
+  /* ============ 答题页 ============ */
+  .top{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:#a08fa8;margin-bottom:10px}
+  .top b{color:#c23d78;font-size:15px}
+  .top #left.warn{color:#e08a3d}
+
+  .hearts{display:flex;gap:2px;margin-bottom:24px}
+  .hearts i{
+    flex:1 1 0;min-width:3px;height:5px;border-radius:99px;
+    background:#f2eaf2;transition:all .3s ease;
+  }
+  .hearts i.on{
+    background:linear-gradient(90deg,#ffb3d9,#e0508f);
+    box-shadow:0 0 6px rgba(224,80,143,.5);
+    transform:scaleY(1.3);
+  }
+  .hearts i.now{
+    background:linear-gradient(90deg,#a06ae0,#e0508f);
+    box-shadow:0 0 10px rgba(160,106,224,.7);
+    transform:scaleY(1.8);
+    animation:heartBeat 1s ease-in-out infinite;
+  }
+  @keyframes heartBeat{0%,100%{transform:scaleY(1.8)}50%{transform:scaleY(2.4)}}
+
+  @keyframes slideIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  #qcard{animation:slideIn .26s ease;position:relative}
+  .meta{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+  .tag{font-size:11px;padding:3px 10px;border-radius:99px;background:#ffe9f4;color:#c23d78;font-weight:600;letter-spacing:.5px}
+  .qnum{font-size:11px;color:#b8a8bc;letter-spacing:1px}
+  #qtext{font-size:19px;line-height:1.55;font-weight:600;margin-bottom:20px;color:#2b2b33}
+
+  #opts{display:flex;flex-direction:column;gap:9px;margin-bottom:20px}
+  .opt{
+    display:flex;align-items:center;gap:12px;width:100%;
+    padding:13px 15px;background:#fff;
+    border:2px solid #f2eaf3;border-radius:15px;
+    font-size:14.5px;color:#3a3540;cursor:pointer;
+    text-align:left;font-family:inherit;transition:all .16s ease;
+    position:relative;overflow:hidden;
+  }
+  .opt:hover{border-color:#f2b8d4;background:#fff9fc;transform:translateX(3px)}
+  .opt:hover .key::after{opacity:1;transform:scale(1)}
+  .opt .key{
+    flex:0 0 24px;height:24px;line-height:24px;text-align:center;
+    border-radius:8px;background:#f6eef6;color:#b07aa0;
+    font-size:12px;font-weight:700;position:relative;
+  }
+  .opt .key::after{
+    content:'♡';position:absolute;inset:0;
+    color:#ff8ec4;opacity:0;transform:scale(.5);
+    transition:all .2s ease;
+  }
+  .opt.sel{
+    background:linear-gradient(90deg,#ffe9f4,#fff0f8);
+    border-color:#e0508f;color:#b02a6b;font-weight:600;transform:translateX(3px);
+  }
+  .opt.sel .key{background:#e0508f;color:transparent}
+  .opt.sel .key::after{opacity:1;transform:scale(1);color:#fff}
+  .opt.dim{opacity:.4}
+
+  .opt.shake{
+    animation:shake .4s cubic-bezier(.36,.07,.19,.97);
+    border-color:#ff6b9d;
+    background:#fff5fa;
+  }
+  @keyframes shake{
+    0%,100%{transform:translateX(3px)}
+    20%{transform:translateX(-5px)}
+    40%{transform:translateX(5px)}
+    60%{transform:translateX(-4px)}
+    80%{transform:translateX(4px)}
+  }
+
+  .foot{display:flex;gap:10px;align-items:center}
+  .foot .btn.ghost{width:auto;flex:0 0 110px;padding:12px;font-size:14px;border-radius:14px}
+  .app.lang-en .foot .btn.ghost{flex:0 0 130px;font-size:13px}
+  .hint{flex:1;text-align:right;font-size:11.5px;color:#c0b4c4;line-height:1.5}
+
+  /* ============ 结果页 ============ */
+  .score-wrap{text-align:center;margin-bottom:16px}
+  .score-wrap .num{
+    font-size:64px;font-weight:800;line-height:1;
+    background:linear-gradient(90deg,#e0508f,#a06ae0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .score-wrap .den{font-size:16px;color:#c0b4c4;margin-left:4px}
+  .score-wrap .lvl{font-size:22px;font-weight:700;margin:14px 0 8px;color:#3a3540}
+  .score-wrap .desc{font-size:14px;color:#8a7f90;line-height:1.75;padding:0 6px}
+
+  .session-stats{
+    display:flex;justify-content:center;gap:16px;flex-wrap:wrap;
+    margin:0 0 20px;
+    font-size:11.5px;color:#b0a4b4;
+  }
+  .session-stats b{color:#c23d78;font-weight:700;margin-left:3px}
+  .session-stats .dot{color:#e0d4e4}
+
+  .warn-box{
+    background:linear-gradient(90deg,#fff5e6,#fff0f6);
+    border:1px solid #ffd9b0;
+    border-radius:14px;
+    padding:12px 16px;
+    font-size:12.5px;line-height:1.75;color:#a0681f;
+    margin-bottom:16px;text-align:left;
+  }
+  .warn-box b{color:#d9641f;font-weight:700}
+
+  .bars{margin:22px 0 20px}
+  .bars h3{font-size:13px;color:#a08fa8;font-weight:600;margin-bottom:14px;letter-spacing:1px}
+  .row{display:flex;align-items:center;gap:10px;margin-bottom:11px;font-size:13px}
+  .row .lb{flex:0 0 40px;text-align:right;color:#6b6470}
+  .app.lang-en .row .lb{flex:0 0 56px;font-size:12px}
+  .row .bar{flex:1;height:10px;background:#f4edf5;border-radius:99px;overflow:hidden;position:relative}
+  .row .bar i{
+    display:block;height:100%;width:0;border-radius:99px;
+    background:linear-gradient(90deg,#ffc2de,#e0508f);
+    transition:width .7s cubic-bezier(.3,1,.4,1);
+    position:relative;
+  }
+  .row .bar i::after{
+    content:'';position:absolute;right:0;top:50%;transform:translate(50%,-50%);
+    width:14px;height:14px;border-radius:50%;
+    background:radial-gradient(circle,#fff 0%,#ffb3d9 40%,transparent 70%);
+    opacity:.9;
+  }
+  .row .vl{flex:0 0 42px;font-size:11.5px;color:#b0a4b4}
+
+  .panel{
+    background:#fdf9fc;border:1px solid #f4e8f2;border-radius:18px;
+    padding:16px 18px;margin-bottom:14px;text-align:left;
+  }
+  .panel h4{font-size:12.5px;color:#c23d78;letter-spacing:1.2px;margin-bottom:10px;font-weight:700}
+  .panel h4::before{content:'♡ ';color:#ff8ec4}
+  .panel p{font-size:14px;line-height:1.85;color:#5c5560}
+  .panel p + p{margin-top:8px}
+  .panel ol{margin:0;padding-left:19px}
+  .panel li{font-size:14px;line-height:1.9;color:#5c5560;margin-bottom:2px}
+  .panel li b{color:#c23d78;font-weight:600}
+
+  .dim-item{display:flex;gap:12px;padding:13px 0;border-bottom:1px dashed #f2e8f2;text-align:left}
+  .dim-item:last-child{border-bottom:none;padding-bottom:2px}
+  .dim-item .dn{flex:0 0 52px;font-weight:700;font-size:13px;color:#a06ae0;padding-top:1px}
+  .app.lang-en .dim-item .dn{flex:0 0 62px;font-size:12px}
+  .dim-item .dn em{display:block;font-style:normal;font-size:10px;color:#c8bcd0;font-weight:500;margin-top:2px}
+  .dim-item .dt{flex:1;font-size:13.5px;line-height:1.78;color:#6b6470}
+  .badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:99px;margin-right:6px;vertical-align:1px;font-weight:600}
+  .b-high{background:#ffe3f0;color:#c23d78}
+  .b-mid{background:#f3ebff;color:#8a5fd0}
+  .b-low{background:#eef2f6;color:#8a97a5}
+
+  .highlight{
+    background:linear-gradient(90deg,#fff2f8,#f7f0ff);
+    border:1px solid #f4e0ee;border-radius:14px;
+    padding:13px 16px;margin-bottom:14px;
+    font-size:13.5px;line-height:1.8;color:#7a5a72;text-align:left;
+  }
+  .highlight b{color:#c23d78}
+
+  .footnote{text-align:center;font-size:11.5px;color:#c0b4c4;line-height:1.7;margin:18px 0 14px}
+
+  /* ============ 粒子 & Toast ============ */
+  .particle{
+    position:fixed;pointer-events:none;z-index:9999;
+    font-size:16px;line-height:1;
+    animation:pop 1.1s cubic-bezier(.15,.8,.4,1) forwards;
+    will-change:transform,opacity;
+  }
+  @keyframes pop{
+    0%{transform:translate(0,0) scale(.3) rotate(0deg);opacity:1}
+    70%{opacity:1}
+    100%{transform:translate(var(--tx),var(--ty)) scale(1.2) rotate(var(--rot));opacity:0}
+  }
+  .confetti{
+    position:fixed;top:-20px;z-index:9998;pointer-events:none;
+    animation:fall linear forwards;
+  }
+  @keyframes fall{
+    0%{transform:translateY(0) rotate(0deg);opacity:1}
+    100%{transform:translateY(105vh) rotate(720deg);opacity:0}
+  }
+  .toast{
+    position:fixed;left:50%;top:26px;
+    transform:translateX(-50%);
+    padding:11px 22px;border-radius:99px;
+    background:rgba(255,255,255,.96);
+    border:1px solid rgba(224,80,143,.32);
+    box-shadow:0 12px 30px rgba(180,120,180,.22);
+    font-size:13px;color:#c23d78;font-weight:600;
+    z-index:10000;pointer-events:none;
+    white-space:nowrap;
+    max-width:calc(100vw - 32px);
+    overflow:hidden;text-overflow:ellipsis;
+    opacity:0;
+    animation:toastIn .36s cubic-bezier(.2,.9,.3,1) forwards;
+  }
+  .toast.out{animation:toastOut .32s ease forwards}
+  @keyframes toastIn{
+    from{opacity:0;transform:translateX(-50%) translateY(-16px)}
+    to{opacity:1;transform:translateX(-50%) translateY(0)}
+  }
+  @keyframes toastOut{
+    from{opacity:1;transform:translateX(-50%) translateY(0)}
+    to{opacity:0;transform:translateX(-50%) translateY(-12px)}
+  }
+
+  @media (max-width:520px){
+    body{padding:20px 12px}
+    .app{padding:28px 20px 24px;border-radius:26px}
+    .lang-btn{top:12px;right:12px;padding:5px 11px;font-size:11px}
+    .hero-title{font-size:29px;letter-spacing:2px}
+    .app.lang-en .hero-title{font-size:23px;letter-spacing:0}
+    .title-wrap{gap:10px}
+    .float-deco{font-size:17px}
+    .stat b{font-size:22px}
+    .stats{gap:9px}
+    .stat{min-height:74px;padding:12px 6px}
+    .features{padding:14px 16px}
+    .features li{font-size:12.5px}
+    .stmt-head{padding:12px 15px;font-size:12px}
+    .stmt-inner{padding:13px 15px 15px}
+    .stmt-inner p{font-size:12px;line-height:1.85}
+    .btn-start{letter-spacing:3px;font-size:15.5px;padding:16px}
+    .app.lang-en .btn-start{letter-spacing:1.5px;font-size:14.5px}
+    .session-stats{gap:10px;font-size:11px}
+    .toast{font-size:12px;padding:10px 18px}
+  }
+</style>
+</head>
+<body>
+
+<div class="bg">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+</div>
+
+<div class="app" id="app">
+
+  <!-- 语言切换 -->
+  <button class="lang-btn" id="langBtn" onclick="toggleLang()">🌐 EN</button>
+
+  <!-- ============ 开始页 ============ -->
+  <div id="screen-start">
+    <div class="hero">
+      <div class="hero-badge" id="heroBadge">500 题库 · 随机抽题</div>
+
+      <div class="title-wrap">
+        <span class="float-deco l">🌸</span>
+        <h1 class="hero-title" id="heroTitle">男娘指数测试</h1>
+        <span class="float-deco r">💖</span>
+      </div>
+
+      <p class="hero-sub" id="heroSub">测测你心里那个她，到底住得有多深 ～</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat" data-emoji="📚"><b>500</b><span class="stat-lb" data-i="0">题库总量</span></div>
+      <div class="stat" data-emoji="🎀"><b>80</b><span class="stat-lb" data-i="1">随机抽题</span></div>
+      <div class="stat" data-emoji="✨"><b>500</b><span class="stat-lb" data-i="2">满指数</span></div>
+    </div>
+
+    <ul class="features" id="features"></ul>
+
+    <div class="statement open" id="statement">
+      <button class="stmt-head" onclick="toggleStmt()">
+        <span class="ttl" id="stmtHead">📜 Coser 与女装性别无关声明</span>
+        <span class="arrow">▼</span>
+      </button>
+      <div class="stmt-body">
+        <div class="stmt-inner" id="stmtInner"></div>
+      </div>
+    </div>
+
+    <button class="btn-start" id="btnStart" onclick="start(event)">开始测试</button>
+    <p class="start-foot" id="startFoot">凭第一反应作答，别想太久哦</p>
+  </div>
+
+  <!-- ============ 答题页 ============ -->
+  <div id="screen-quiz" class="hidden">
+    <div class="top">
+      <span id="qProgress">第 <b id="cur">1</b> / 80 题</span>
+      <span id="left">还剩 80 题</span>
+    </div>
+    <div class="hearts" id="hearts"></div>
+    <div id="qcard">
+      <div class="meta">
+        <span class="tag" id="dim">穿搭</span>
+        <span class="qnum" id="qnum">Q1</span>
+      </div>
+      <div id="qtext">题目加载中…</div>
+      <div id="opts"></div>
+    </div>
+    <div class="foot">
+      <button class="btn ghost" id="prev" onclick="prevQ()">← 上一题</button>
+      <div class="hint" id="hintText">点击选项自动下一题<br>键盘 1~5 快速作答</div>
+    </div>
+  </div>
+
+  <!-- ============ 结果页 ============ -->
+  <div id="screen-result" class="hidden">
+    <div class="score-wrap">
+      <div><span class="num" id="score">0</span><span class="den" id="scoreDen">/ 500</span></div>
+      <div class="lvl" id="lvl"></div>
+      <div class="desc" id="desc"></div>
+    </div>
+
+    <div class="session-stats" id="sessionStats"></div>
+    <div class="warn-box hidden" id="warnBox"></div>
+
+    <div class="bars">
+      <h3 id="barsTitle">六维倾向</h3>
+      <div id="barList"></div>
+    </div>
+
+    <div class="highlight" id="hl"></div>
+
+    <div class="panel">
+      <h4 id="panelDim">维度解读</h4>
+      <div id="dimDetail"></div>
+    </div>
+
+    <div class="panel">
+      <h4 id="panelAnalysis">分 析</h4>
+      <p id="pAnalysis"></p>
+    </div>
+
+    <div class="panel">
+      <h4 id="panelTip">温 馨 提 示</h4>
+      <p id="pTip"></p>
+    </div>
+
+    <div class="panel">
+      <h4 id="panelNext">下一步可以做什么</h4>
+      <ol id="pNext"></ol>
+    </div>
+
+    <p class="footnote" id="footnote">本测试仅供娱乐，不构成任何心理学诊断。<br>无论分数多少，做自己最舒服的样子就好 ♡</p>
+    <button class="btn" id="againBtn" onclick="location.reload()">再测一次</button>
+  </div>
+
+</div>
+
+<script>
+/* ================= I18N 数据 ================= */
+const I18N = {
+  zh: {
+    langBtn: '🌐 EN',
+    badge: '500 题库 · 随机抽题',
+    title: '男娘指数测试',
+    subtitle: '测测你心里那个她，到底住得有多深 ～',
+    statLabels: ['题库总量', '随机抽题', '满指数'],
+    features: [
+      '从 100 个场景 × 5 种问法中随机抽取 80 题',
+      '点选即切题，键盘 1~5 快速作答，← 返回上一题',
+      '⚡ 内置防乱答机制：秒答过多会被提醒，结果可能不准',
+      '结果含六维倾向、维度解读、温馨提示与下一步建议'
+    ],
+    stmtHead: '📜 Coser 与女装性别无关声明',
+    stmtBody: [
+      'Cosplay 源于热爱，女装源于审美，二者都不该被性别绑架。衣服没有性别，角色也没有。男生可以 cos 女角，女生可以 cos 男角；男生可以穿裙子，女生可以穿西装。这不是「奇怪」，也不是「越界」，只是一个人选择成为自己喜欢的样子。',
+      '我们尊重每一位创作者与爱好者。评价 coser，应看还原度、用心和创意，而非生理性别；评价穿着，应看舒适与自由，而非「该不该」。用性别设限、以偏见嘲讽，只会伤害热爱，压抑表达。',
+      '每个人都有权决定自己的外表与风格。无论为了角色、为了美，还是单纯因为喜欢，都值得被平等对待。请少一点指指点点，多一点理解尊重。愿圈子包容每一种热爱，让每个人都能自由扮演心爱的角色，穿上喜欢的衣服。'
+    ],
+    stmtSig: '角色无界，服装无性，热爱平等。',
+    startBtn: '开始测试',
+    startFoot: '凭第一反应作答，别想太久哦',
+
+    qProgress: i => `第 <b>${i}</b> / 80 题`,
+    qLeft: n => `还剩 ${n} 题`,
+    prevBtn: '← 上一题',
+    hintText: '点击选项自动下一题<br>键盘 1~5 快速作答',
+
+    scoreDen: '/ 500',
+    barsTitle: '六维倾向',
+    panelDim: '维度解读',
+    panelAnalysis: '分 析',
+    panelTip: '温 馨 提 示',
+    panelNext: '下一步可以做什么',
+    footnote: '本测试仅供娱乐，不构成任何心理学诊断。<br>无论分数多少，做自己最舒服的样子就好 ♡',
+    againBtn: '再测一次',
+
+    statTime: '总用时',
+    statAvg: '平均每题',
+    statFast: '秒答',
+    statUnit: '题',
+    secUnit: '秒',
+    minUnit: '分',
+
+    warnInvalid: (f, a) => `⚠️ <b>本次答题速度异常</b>，共检测到 <b>${f}</b> 道秒答题，平均每题仅 <b>${a}</b> 秒。测试结果的参考性较低，建议重新认真作答一次。`,
+    warnMild: f => `⏱️ 你有 <b>${f}</b> 道题作答较快，虽然结果有效，但如果想更准确，下次可以稍微慢一点。`,
+
+    cooldownToasts: [
+      '慢一点点～认真读题才准哦 ♡',
+      '别急别急，慢慢来～',
+      '太快啦，结果会不准的哦',
+      '深呼吸，读清楚再选嘛 ♡'
+    ],
+    streakToasts: [
+      '连着秒答啦，稍微慢一点～',
+      '检测到答题过快，休息一下下 ♡',
+      '别光点不看呀，认真一点嘛'
+    ],
+
+    dimLabel: { '穿搭':'穿搭', '妆容':'妆容', '身体':'身体', '气质':'气质', '心理':'心理', '社交':'社交' },
+    dimMeta: {
+      '穿搭': { icon:'衣',
+        high:'衣柜里大概已经有几件不太方便让家人看到的东西了。你对版型、颜色、搭配的敏感度，早就过了「随便穿穿」的阶段，心里有一个很具体的「想成为的样子」。',
+        mid:'你会为某个场合认真挑衣服，也收藏过几件「以后再说」的单品。兴趣是有的，只是还没完全放开。',
+        low:'衣服对你来说主要功能是「穿」。舒服、方便、不出错，比什么都重要。'},
+      '妆容': { icon:'妆',
+        high:'你不只是「想试试」，而是真的动过手。眼线、遮瑕、卧蚕这些词对你并不陌生，你清楚妆前妆后的差距能有多大。',
+        mid:'你关注过，也可能偷偷试过一两次。化妆对你来说还带着一点神秘感，没有完全上手。',
+        low:'素颜出门对你毫无压力，化妆品柜台和电器城对你来说区别不大。'},
+      '身体': { icon:'体',
+        high:'你对身体的在意程度很高。腿毛、体态、皮肤、体重，这些都在你的清单上，你希望身体能更接近心里的样子。',
+        mid:'你偶尔会为身材焦虑一下，也会做一些基础护理，但还没到执念的程度。',
+        low:'身体对你来说主要是「能用就行」，很少花心思去雕琢它。'},
+      '气质': { icon:'气',
+        high:'你已经开始管理自己的「感觉」了。声音、姿势、小动作，这些细节你都在意。你知道可爱是可以被练习出来的。',
+        mid:'你在某些场合会不自觉柔化自己的表达，但大部分时候还是维持原样。',
+        low:'你的表达方式直接、自然，不太会为了别人的观感去调整自己。'},
+      '心理': { icon:'心',
+        high:'这可能是你最真实的一个维度。你对性别角色的想象和认同，已经不只是「好玩」两个字能概括的，它更接近一种自我认知。',
+        mid:'你偶尔会幻想另一种身份，但还没到要认真面对它的程度，暂时当作一个念头放着。',
+        low:'你对自己的性别身份很确定，很少产生「如果我是另一种样子」的念头。'},
+      '社交': { icon:'交',
+        high:'你希望这件事不只是藏在房间里。你愿意被人看到、被人叫那个名字、被人当成那个样子对待——这需要勇气。',
+        mid:'你希望有同好，但还不太敢让现实里的熟人知道，线上线下是两个世界。',
+        low:'这是你私人的事，不太想和别人分享，也不觉得需要被谁认可。'}
+    },
+    lvHigh:'高', lvMid:'中', lvLow:'低',
+    hlStrong: ' 你的倾向非常集中，说明你在这件事上不是「泛泛感兴趣」，而是有明确的着力点。',
+    hlEven: ' 六个维度差距不大，说明你的态度比较均衡，还没形成明显的偏向。',
+    hlTop: '你最突出的是', hlBottom: '最保守的是',
+
+    levels: [
+      { max:100, lvl:'🧱 纯正钢铁直男',
+        desc:'男娘？那是什么，能吃吗。你的世界简单、稳定，且毫不动摇。',
+        analysis:'你的答案几乎清一色是「没兴趣」「从没做过」。这不是缺点，说明你对自己现在的状态很满意，没有内耗，也不需要靠改变外表来获得认同。你在这件事上最大的特点就是：不纠结。',
+        tip:'这个测试对你来说大概只是个乐子。如果身边有人喜欢这些，试着别急着评判——那是他们的自由，就像你对球鞋、游戏、健身的执着一样。你不需要理解，只需要不伤害。',
+        next:['<b>保持现状</b>：你现在的舒服状态本身就很好，不用为了合群去尝试什么。',
+          '<b>如果纯好奇</b>：可以抱着了解的心态看看相关内容，不用有负担，好奇不等于什么。',
+          '<b>尊重差异</b>：遇到和你不一样的人，先别下判断，多听一句。',
+          '<b>真想试</b>：从一件中性单品开始，比如版型柔和的卫衣，无伤大雅。']},
+      { max:200, lvl:'🌱 潜力种子',
+        desc:'你不是完全无感，但也没有真正行动过。好奇心像一颗种子，还没浇水。',
+        analysis:'你被「别人会怎么看」这件事困住了一点。你对某些东西有兴趣，但理智会很快把它压下去，告诉自己「这不合适」。你的分数不高，不是因为不喜欢，而是因为还没允许自己喜欢。',
+        tip:'好奇不是错，也不代表什么。喜欢一件衣服、想试一次妆，这些都不能定义你是什么人。它们只是你的一部分喜好，和喜欢某种音乐没有本质区别。给自己一点空间，不用急着下结论。',
+        next:['<b>从最没压力的开始</b>：买一双好看的长袜，或一件版型柔和的卫衣。',
+          '<b>找一个绝对私密的时间</b>：试一次你最想试的东西，观察自己的真实反应，别急着评价。',
+          '<b>不用贴标签</b>：现阶段只需要「观察」，不需要回答「我到底是什么」。',
+          '<b>找一个能聊的人</b>：哪怕只有一个，能让你不用伪装地说话，会轻松很多。']},
+      { max:300, lvl:'🌸 觉醒中',
+        desc:'你已经偷偷研究过化妆、穿搭、腿型了。别装了，我们都懂。',
+        analysis:'你已经真的做过一些事了。你可能有一个小抽屉、一个收藏夹、一个不常用的小号。你在「想要」和「不敢」之间来回拉扯，今天觉得很确定，明天又怀疑自己是不是想多了——这种拉扯本身就很消耗人。',
+        tip:'你现在的状态其实挺正常的，很多人在这个阶段都会反复自我怀疑。不用逼自己给出答案，答案会慢慢清楚的。你唯一需要警惕的是：别让这件事挤占你正常的生活、学习和人际关系。',
+        next:['<b>把「偷偷做」变成「好好做」</b>：认真研究一次穿搭或化妆，而不是随便糊弄，你会发现效果差很多。',
+          '<b>建一个只属于自己的空间</b>：相册、文件夹、小号都行，把喜欢的东西整理起来，这是一种自我确认。',
+          '<b>想清楚一件事</b>：你最在意的到底是「好看」，还是「身份认同」？这两个方向要走的路线完全不同。',
+          '<b>设一条底线</b>：不影响学业、工作、健康和重要关系，这是长期玩下去的前提。']},
+      { max:400, lvl:'💅 资深男娘',
+        desc:'裙子、丝袜、假发，你至少拥有一件。被叫姐姐会脸红，但心里挺开心。',
+        analysis:'你对自己想要什么是清楚的。你有实战经验，知道什么适合自己、什么不适合，可能在线上有固定的社交圈，也可能在现实中藏得很好。你面对的主要问题已经从「我喜不喜欢」变成了「我怎么和现实共处」。',
+        tip:'你现在最该关心的不是「我是不是」，而是「我怎么在真实生活和这个爱好之间找到平衡」。藏得越久，压力越大，但公开也不是唯一答案。出不出柜、对谁出柜、什么时候出柜，选择权完全在你手上，没人有资格催你。',
+        next:['<b>把装备和技巧系统化</b>：整理穿搭、化妆、拍照的流程，形成自己的风格，而不是每次都从零开始。',
+          '<b>找到能做自己的小圈子</b>：哪怕只有一两个人，真实的回应比一百个点赞有用。',
+          '<b>做一次长期规划</b>：这件事在你未来的人生里放什么位置？工作、家庭、感情，各自怎么处理。',
+          '<b>注意身体代价</b>：束腰、高跟鞋、长时间戴假发都有健康风险，别为好看硬扛。',
+          '<b>留意情绪状态</b>：如果出现持续的低落、焦虑或自我否定，找专业心理咨询，不要自己扛。']},
+      { max:500, lvl:'👑 男娘之神',
+        desc:'你已经是传说。走在路上没人能一眼看穿你。请收下我的膝盖。',
+        analysis:'这个分数意味着，这些事已经不是你的「爱好」，而是你生活的一部分，甚至是你身份的一部分。你对细节的把控、对自我的认知，都到了很高的程度。你不太需要这个测试来告诉你什么，你早就知道了。',
+        tip:'走到这一步，最难的可能不是技术，而是如何被这个世界接受。你会遇到不理解、偏见，甚至恶意。请记住，你没有做错任何事。但也要保护好自己——不是所有人都值得你坦诚，保护好自己不等于不勇敢。',
+        next:['<b>建立你的支持系统</b>：找到真正接纳你的人，无论是线上还是线下，这是长期走下去的底气。',
+          '<b>想清楚出柜的边界和节奏</b>：对谁、到哪一步、什么时机，你说了算，不要被任何人推着走。',
+          '<b>长期关注身心健康</b>：激素、医美、束身这些事，请一定走正规渠道、听专业医生的话。',
+          '<b>参与社群</b>：如果条件允许，帮一把还在迷茫的人，你的经验对别人很珍贵。',
+          '<b>你不需要证明什么</b>：不需要向任何人证明你「够格」，也不必活成别人期待的样子。']}
+    ]
+  },
+
+  en: {
+    langBtn: '🌐 中文',
+    badge: '500 QUESTIONS · RANDOM DRAW',
+    title: 'Femboy Index Test',
+    subtitle: 'Measure how deep she lives inside you ～',
+    statLabels: ['Question Bank', 'Per Draw', 'Max Index'],
+    features: [
+      '80 questions drawn randomly from 100 scenarios × 5 angles',
+      'Tap to advance · Keys 1–5 to answer · ← to go back',
+      '⚡ Anti-rush system: too many instant answers will trigger a warning',
+      'Results include six-dimension profile, interpretations, tips, and next steps'
+    ],
+    stmtHead: '📜 Coser & Crossdressing — Gender-Irrelevant Statement',
+    stmtBody: [
+      'Cosplay comes from love, crossdressing from aesthetics — neither should be shackled by gender. Clothes have no gender, and neither do characters. Boys can cosplay female characters, girls can cosplay male characters; boys can wear skirts, girls can wear suits. This is not “weird” or “crossing a line” — it is simply a person choosing to become the version of themselves they love.',
+      'We respect every creator and enthusiast. A coser should be judged by accuracy, effort, and creativity — not by biological sex. An outfit should be judged by comfort and freedom — not by “should” or “shouldn’t”. Setting limits by gender or mocking with prejudice only hurts passion and suppresses expression.',
+      'Everyone has the right to decide their own appearance and style. Whether for a character, for beauty, or simply because you like it — you deserve equal treatment. Please judge less, understand more. May the community embrace every kind of passion, and let everyone freely play the character they love and wear the clothes they like.'
+    ],
+    stmtSig: 'Boundless characters, genderless clothing, equal passion.',
+    startBtn: 'Start Test',
+    startFoot: 'Answer by first instinct — don’t overthink ～',
+
+    qProgress: i => `Question <b>${i}</b> / 80`,
+    qLeft: n => `${n} left`,
+    prevBtn: '← Previous',
+    hintText: 'Tap an option to advance<br>Keys 1–5 for quick answers',
+
+    scoreDen: '/ 500',
+    barsTitle: 'SIX-DIMENSION PROFILE',
+    panelDim: 'DIMENSION BREAKDOWN',
+    panelAnalysis: 'ANALYSIS',
+    panelTip: 'GENTLE REMINDER',
+    panelNext: 'WHAT YOU CAN DO NEXT',
+    footnote: 'This test is for entertainment only and is not a psychological diagnosis.<br>Whatever your score, the best version of you is the one that feels most comfortable ♡',
+    againBtn: 'Take Again',
+
+    statTime: 'Total',
+    statAvg: 'Avg / Q',
+    statFast: 'Instant',
+    statUnit: '',
+    secUnit: 's',
+    minUnit: 'm',
+
+    warnInvalid: (f, a) => `⚠️ <b>Abnormal response speed detected.</b> ${f} instant answers were logged, averaging only <b>${a}s</b> per question. The reliability of this result is low — please retake the test carefully.`,
+    warnMild: f => `⏱️ You answered <b>${f}</b> questions very quickly. The result is still valid, but for better accuracy, consider slowing down next time.`,
+
+    cooldownToasts: [
+      'Slow down a bit ～ read carefully for accuracy ♡',
+      'No rush — take your time ～',
+      'Too fast! The result won’t be accurate',
+      'Deep breath — read it fully before choosing ♡'
+    ],
+    streakToasts: [
+      'You’re answering too fast — slow down a bit ～',
+      'Speed detected — take a short pause ♡',
+      'Don’t just tap — read the question carefully'
+    ],
+
+    dimLabel: { '穿搭':'Style', '妆容':'Makeup', '身体':'Body', '气质':'Vibe', '心理':'Mind', '社交':'Social' },
+    dimMeta: {
+      '穿搭': { icon:'衣',
+        high:'Your wardrobe probably already has a few things you’d rather not show your family. Your sensitivity to cuts, colors, and coordination passed the “just throw something on” stage long ago — you have a very specific “person you want to become” in mind.',
+        mid:'You pick clothes carefully for certain occasions, and you’ve saved a few “maybe later” pieces. The interest is there, just not fully opened up yet.',
+        low:'Clothes are mainly for wearing. Comfort, convenience, and not going wrong matter more than anything.'},
+      '妆容': { icon:'妆',
+        high:'You didn’t just “want to try” — you actually did it. Eyeliner, concealer, aegyo-sal — these words aren’t foreign to you, and you know exactly how big the difference is before and after makeup.',
+        mid:'You’ve paid attention, maybe secretly tried once or twice. Makeup still holds a bit of mystery for you — you haven’t fully gotten the hang of it.',
+        low:'Going out bare-faced is no pressure at all. The cosmetics counter and the electronics store are about the same to you.'},
+      '身体': { icon:'体',
+        high:'You care about your body a lot. Leg hair, posture, skin, weight — all on your checklist. You want your body to get closer to the image in your mind.',
+        mid:'You occasionally worry about your figure and do some basic care, but haven’t reached the point of obsession.',
+        low:'Your body is mainly “as long as it works” — you rarely invest thought in refining it.'},
+      '气质': { icon:'气',
+        high:'You’ve started managing your “vibe”. Voice, posture, small gestures — you care about these details. You know cuteness can be practiced.',
+        mid:'You unconsciously soften your expression in some situations, but most of the time you stay as you are.',
+        low:'Your way of expressing is direct and natural — you don’t tend to adjust yourself for others’ perception.'},
+      '心理': { icon:'心',
+        high:'This might be your truest dimension. Your imagination and identification with gender roles is no longer just “fun” — it’s closer to self-recognition.',
+        mid:'You occasionally fantasize about another identity, but not yet to the point of facing it seriously — for now, just a thought you set aside.',
+        low:'You’re very certain about your gender identity, and rarely have the thought of “what if I were another way”.'},
+      '社交': { icon:'交',
+        high:'You want this to be more than just hidden in your room. You’re willing to be seen, to be called that name, to be treated as that — this takes courage.',
+        mid:'You want like-minded friends, but don’t quite dare let people in your real life know. Online and offline are two worlds.',
+        low:'This is your private business — you don’t really want to share it, and don’t feel you need anyone’s approval.'}
+    },
+    lvHigh:'HIGH', lvMid:'MID', lvLow:'LOW',
+    hlStrong: ' Your tendency is highly concentrated — this isn’t casual interest, but a clear focus.',
+    hlEven: ' The six dimensions are close in value, suggesting a balanced attitude without a strong bias yet.',
+    hlTop: 'Your strongest dimension is', hlBottom: 'your most reserved is',
+
+    levels: [
+      { max:100, lvl:'🧱 Pure Steel Straight Guy',
+        desc:'Femboy? What’s that — can you eat it? Your world is simple, stable, and unshakeable.',
+        analysis:'Your answers are almost all “not interested” and “never done it”. This isn’t a flaw — it shows you’re satisfied with your current state, have no inner conflict, and don’t need to change your appearance to gain recognition. Your biggest trait here is: no hesitation.',
+        tip:'This test is probably just a joke to you. If people around you like these things, try not to judge too quickly — that’s their freedom, just like your obsession with sneakers, games, or fitness. You don’t need to understand, you just need to not harm.',
+        next:['<b>Stay as you are</b>: your current comfortable state is already good — no need to try anything to fit in.',
+          '<b>If purely curious</b>: you can look at related content with an open mind, no pressure — curiosity doesn’t mean anything.',
+          '<b>Respect differences</b>: when you meet someone different, don’t judge too fast — listen one more sentence.',
+          '<b>If you really want to try</b>: start with something neutral, like a soft-cut hoodie. Harmless.']},
+      { max:200, lvl:'🌱 Seed of Potential',
+        desc:'You’re not completely indifferent, but you haven’t truly acted either. Curiosity is a seed that hasn’t been watered yet.',
+        analysis:'You’re a bit stuck on “what will others think”. You’re interested in certain things, but reason quickly pushes it down, telling yourself “this isn’t appropriate”. Your score isn’t low because you dislike it — it’s because you haven’t allowed yourself to like it yet.',
+        tip:'Curiosity isn’t wrong, and it doesn’t mean anything. Liking a piece of clothing or wanting to try makeup once doesn’t define who you are. They’re just part of your preferences, no different in nature from liking certain music. Give yourself some space — no need to jump to conclusions.',
+        next:['<b>Start with the lowest pressure</b>: buy a nice pair of long socks, or a soft-cut hoodie.',
+          '<b>Find a fully private moment</b>: try the one thing you most want to try, observe your real reaction — don’t rush to judge.',
+          '<b>Don’t label yourself</b>: at this stage you only need to “observe”, not to answer “what am I”.',
+          '<b>Find someone to talk to</b>: even just one person who lets you speak without pretending makes things much lighter.']},
+      { max:300, lvl:'🌸 Awakening',
+        desc:'You’ve secretly researched makeup, outfits, and leg shapes. Stop pretending — we all get it.',
+        analysis:'You’ve actually done some things. You might have a small drawer, a collection, a rarely-used alt account. You’re torn back and forth between “wanting” and “not daring” — certain today, doubting yourself tomorrow. This tug-of-war itself is exhausting.',
+        tip:'Your current state is actually quite normal — many people in this stage repeatedly doubt themselves. Don’t force yourself to give an answer; it will become clear gradually. The only thing you need to watch out for is: don’t let this crowd out your normal life, studies, and relationships.',
+        next:['<b>Turn “secretly doing” into “doing it well”</b>: research a style or makeup look seriously, instead of half-heartedly — the difference will surprise you.',
+          '<b>Build a space that’s only yours</b>: an album, folder, or alt account — organize the things you like. It’s a form of self-affirmation.',
+          '<b>Figure out one thing</b>: is what you care about most “looking good”, or “identity”? The two paths are completely different.',
+          '<b>Set one bottom line</b>: don’t affect your studies, work, health, or important relationships — that’s the precondition for the long run.']},
+      { max:400, lvl:'💅 Veteran Femboy',
+        desc:'Skirt, stockings, wig — you own at least one. Being called “jiejie” makes you blush, but you’re happy inside.',
+        analysis:'You’re clear about what you want. You have practical experience, know what suits you and what doesn’t, might have a fixed online circle, and might also hide it well in real life. Your main problem has shifted from “do I like it” to “how do I coexist with reality”.',
+        tip:'What you should care about now isn’t “am I”, but “how do I find balance between real life and this interest”. The longer you hide, the more pressure builds — but going public isn’t the only answer either. Whether, to whom, and when to come out is entirely up to you. No one has the right to rush you.',
+        next:['<b>Systematize your gear and skills</b>: organize your outfit, makeup, and photo workflow into your own style — don’t start from scratch every time.',
+          '<b>Find a small circle where you can be yourself</b>: even one or two people. A genuine response is worth more than a hundred likes.',
+          '<b>Make a long-term plan</b>: where does this fit in your future life? Work, family, relationships — handle each separately.',
+          '<b>Watch the physical cost</b>: corsets, heels, and long-term wigs all carry health risks — don’t tough it out for looks.',
+          '<b>Watch your emotional state</b>: if persistent low mood, anxiety, or self-denial appears, seek professional counseling — don’t carry it alone.']},
+      { max:500, lvl:'👑 Femboy God',
+        desc:'You’re already a legend. No one can tell at a glance on the street. Please accept my knee.',
+        analysis:'This score means these things are no longer your “hobby”, but part of your life — even part of your identity. Your control of details and self-awareness have reached a very high level. You don’t really need this test to tell you anything — you already knew.',
+        tip:'At this stage, the hardest part might not be technique, but how to be accepted by this world. You’ll encounter misunderstanding, prejudice, even malice. Remember, you’ve done nothing wrong. But also protect yourself — not everyone deserves your honesty, and protecting yourself doesn’t mean you’re not brave.',
+        next:['<b>Build your support system</b>: find people who truly accept you, online or offline — this is the foundation for the long run.',
+          '<b>Think through the boundaries and pace of coming out</b>: to whom, how far, when — you decide. Don’t let anyone push you.',
+          '<b>Long-term attention to body and mind</b>: hormones, medical aesthetics, body shaping — always go through proper channels and listen to doctors.',
+          '<b>Join the community</b>: if conditions allow, help those still lost — your experience is precious to others.',
+          '<b>You don’t need to prove anything</b>: not to anyone that you’re “qualified”, and you don’t need to live up to anyone’s expectations.']}
+    ]
+  }
+};
+
+/* ================= 场景（双语） ================= */
+const SCENES = [
+  // 穿搭 / Style
+  { zh:'试穿一条裙子', en:'Try on a skirt', dim:'穿搭' },
+  { zh:'穿上JK制服', en:'Wear a JK uniform', dim:'穿搭' },
+  { zh:'试一套洛丽塔', en:'Try on a Lolita dress', dim:'穿搭' },
+  { zh:'穿长筒袜', en:'Wear thigh-high socks', dim:'穿搭' },
+  { zh:'穿丝袜', en:'Wear pantyhose', dim:'穿搭' },
+  { zh:'穿女式内衣', en:'Wear women’s underwear', dim:'穿搭' },
+  { zh:'踩上高跟鞋', en:'Step into high heels', dim:'穿搭' },
+  { zh:'穿女款外套出门', en:'Go out in a women’s coat', dim:'穿搭' },
+  { zh:'搭一整套女装出门', en:'Go out in a full women’s outfit', dim:'穿搭' },
+  { zh:'系上束腰', en:'Wear a corset', dim:'穿搭' },
+  { zh:'穿超短裤', en:'Wear short shorts', dim:'穿搭' },
+  { zh:'穿吊带背心', en:'Wear a camisole', dim:'穿搭' },
+  { zh:'戴项圈或颈饰', en:'Wear a choker or necklace', dim:'穿搭' },
+  { zh:'试穿女仆装', en:'Try on a maid outfit', dim:'穿搭' },
+  { zh:'试穿旗袍', en:'Try on a qipao', dim:'穿搭' },
+  { zh:'挑女装的尺码', en:'Pick women’s clothing sizes', dim:'穿搭' },
+  { zh:'走进女装店', en:'Walk into a women’s clothing store', dim:'穿搭' },
+  { zh:'把男装穿出柔美感', en:'Make men’s clothes look soft and graceful', dim:'穿搭' },
+  { zh:'收藏一条小裙子', en:'Save a cute dress to your wishlist', dim:'穿搭' },
+  { zh:'拍一张女装照', en:'Take a crossdressing photo', dim:'穿搭' },
+
+  // 妆容 / Makeup
+  { zh:'画眼线', en:'Draw eyeliner', dim:'妆容' },
+  { zh:'涂口红', en:'Apply lipstick', dim:'妆容' },
+  { zh:'打底遮瑕', en:'Apply foundation and concealer', dim:'妆容' },
+  { zh:'修眉画眉', en:'Shape and draw your eyebrows', dim:'妆容' },
+  { zh:'涂指甲油', en:'Paint your nails', dim:'妆容' },
+  { zh:'戴美瞳', en:'Wear colored contacts', dim:'妆容' },
+  { zh:'贴假睫毛', en:'Apply false eyelashes', dim:'妆容' },
+  { zh:'打修容阴影', en:'Apply contour', dim:'妆容' },
+  { zh:'画卧蚕', en:'Draw aegyo-sal', dim:'妆容' },
+  { zh:'扫腮红', en:'Apply blush', dim:'妆容' },
+  { zh:'用定妆喷雾', en:'Use setting spray', dim:'妆容' },
+  { zh:'认真卸妆护肤', en:'Carefully remove makeup and do skincare', dim:'妆容' },
+  { zh:'看美妆教程', en:'Watch makeup tutorials', dim:'妆容' },
+  { zh:'给别人化妆', en:'Do makeup for someone else', dim:'妆容' },
+  { zh:'素颜出门', en:'Go out bare-faced', dim:'妆容' },
+  { zh:'研究自己的脸型', en:'Study your own face shape', dim:'妆容' },
+  { zh:'种草一堆化妆品', en:'Get tempted by tons of cosmetics', dim:'妆容' },
+
+  // 身体 / Body
+  { zh:'刮腿毛', en:'Shave your leg hair', dim:'身体' },
+  { zh:'处理胡子', en:'Deal with facial hair', dim:'身体' },
+  { zh:'涂身体乳', en:'Apply body lotion', dim:'身体' },
+  { zh:'做美白', en:'Whiten your skin', dim:'身体' },
+  { zh:'瘦腿', en:'Slim your legs', dim:'身体' },
+  { zh:'练臀', en:'Train your glutes', dim:'身体' },
+  { zh:'减脂', en:'Lose fat', dim:'身体' },
+  { zh:'喷香水', en:'Wear perfume', dim:'身体' },
+  { zh:'了解医美', en:'Look into medical aesthetics', dim:'身体' },
+  { zh:'护发养发', en:'Care for your hair', dim:'身体' },
+  { zh:'泡澡加浴盐', en:'Take a bath with bath salts', dim:'身体' },
+  { zh:'每天称体重', en:'Weigh yourself daily', dim:'身体' },
+  { zh:'穿收腹裤', en:'Wear shaping shorts', dim:'身体' },
+  { zh:'保养手部', en:'Care for your hands', dim:'身体' },
+  { zh:'涂护唇膏', en:'Apply lip balm', dim:'身体' },
+  { zh:'早睡养生', en:'Sleep early for wellness', dim:'身体' },
+  { zh:'矫正体态', en:'Correct your posture', dim:'身体' },
+
+  // 气质 / Vibe
+  { zh:'把声音放柔', en:'Soften your voice', dim:'气质' },
+  { zh:'调整走路姿势', en:'Adjust your walk', dim:'气质' },
+  { zh:'坐着并腿', en:'Sit with your legs together', dim:'气质' },
+  { zh:'找自拍角度', en:'Find your best selfie angle', dim:'气质' },
+  { zh:'拍照比心', en:'Make a heart pose in photos', dim:'气质' },
+  { zh:'撒娇', en:'Act cute and clingy', dim:'气质' },
+  { zh:'翘小指', en:'Raise your pinky', dim:'气质' },
+  { zh:'压低声音说话', en:'Lower your voice when speaking', dim:'气质' },
+  { zh:'捂嘴笑', en:'Cover your mouth when laughing', dim:'气质' },
+  { zh:'被夸可爱', en:'Being called cute', dim:'气质' },
+  { zh:'摆可爱的pose', en:'Strike a cute pose', dim:'气质' },
+  { zh:'用颜文字', en:'Use kaomoji', dim:'气质' },
+  { zh:'把声音变细', en:'Make your voice higher', dim:'气质' },
+  { zh:'撩头发的小动作', en:'Flick your hair as a small gesture', dim:'气质' },
+  { zh:'眨眼看人', en:'Blink when looking at someone', dim:'气质' },
+  { zh:'双手捧脸', en:'Cup your face with both hands', dim:'气质' },
+  { zh:'说话带尾音', en:'Add a trailing tone when speaking', dim:'气质' },
+
+  // 心理 / Mind
+  { zh:'被叫姐姐', en:'Being called “jiejie” (big sister)', dim:'心理' },
+  { zh:'被叫妹妹', en:'Being called “meimei” (little sister)', dim:'心理' },
+  { zh:'被叫小可爱', en:'Being called “cute little one”', dim:'心理' },
+  { zh:'幻想自己是女孩子', en:'Imagining yourself as a girl', dim:'心理' },
+  { zh:'想变成动漫里的角色', en:'Wanting to become an anime character', dim:'心理' },
+  { zh:'觉得自己灵魂是女生', en:'Feeling your soul is female', dim:'心理' },
+  { zh:'喜欢中性的称呼', en:'Preferring gender-neutral terms', dim:'心理' },
+  { zh:'讨厌被叫哥们', en:'Hating being called “bro”', dim:'心理' },
+  { zh:'想拥有女生的身体', en:'Wanting a girl’s body', dim:'心理' },
+  { zh:'觉得性别是流动的', en:'Feeling gender is fluid', dim:'心理' },
+  { zh:'希望被当成女孩对待', en:'Wishing to be treated as a girl', dim:'心理' },
+  { zh:'幻想穿婚纱', en:'Imagining wearing a wedding dress', dim:'心理' },
+  { zh:'给自己取一个女名', en:'Giving yourself a feminine name', dim:'心理' },
+  { zh:'觉得自己有两面', en:'Feeling you have two sides', dim:'心理' },
+  { zh:'想被人保护', en:'Wanting to be protected', dim:'心理' },
+
+  // 社交 / Social
+  { zh:'和女生做闺蜜', en:'Being besties with girls', dim:'社交' },
+  { zh:'加入男娘群', en:'Joining a femboy group', dim:'社交' },
+  { zh:'把女装照发到网上', en:'Posting crossdressing photos online', dim:'社交' },
+  { zh:'被人搭讪', en:'Being approached by someone', dim:'社交' },
+  { zh:'跟人撒娇', en:'Acting cute with others', dim:'社交' },
+  { zh:'被男生夸漂亮', en:'Being called pretty by a guy', dim:'社交' },
+  { zh:'和女生一起逛街', en:'Going shopping with girls', dim:'社交' },
+  { zh:'去漫展cos', en:'Cosplaying at a convention', dim:'社交' },
+  { zh:'认识同好', en:'Meeting like-minded people', dim:'社交' },
+  { zh:'让朋友叫你的新名字', en:'Having friends call you by your new name', dim:'社交' },
+  { zh:'被父母发现女装', en:'Being caught crossdressing by parents', dim:'社交' },
+  { zh:'在现实中被认成女生', en:'Being mistaken for a girl in real life', dim:'社交' },
+  { zh:'跟对象坦白', en:'Coming clean to your partner', dim:'社交' },
+  { zh:'公开自己的喜好', en:'Publicly sharing your preferences', dim:'社交' }
+];
+
+/* ================= 问法视角（双语） ================= */
+const LENSES = [
+  {
+    q: {
+      zh: s => `关于「${s}」，你的真实态度是？`,
+      en: s => `What’s your honest attitude toward “${s}”?`
+    },
+    sets: {
+      zh: [
+        ['完全排斥，想都不会想','无感，跟我没什么关系','有点好奇，但仅此而已','挺喜欢的，会主动关注','这就是我的日常'],
+        ['这不是我该碰的东西','随便吧，无所谓','偶尔会心动一下','会认真对待','已经完全融进生活']
+      ],
+      en: [
+        ['Totally against it, wouldn’t even think about it','Don’t care, nothing to do with me','A bit curious, but that’s all','I like it, actively follow it','This is my daily life'],
+        ['Not something I should touch','Whatever, doesn’t matter','Get a little tempted sometimes','Take it seriously','Already fully part of my life']
+      ]
+    }
+  },
+  {
+    q: {
+      zh: s => `过去一年里，「${s}」这件事你做过吗？`,
+      en: s => `In the past year, have you done “${s}”?`
+    },
+    sets: {
+      zh: [
+        ['从没做过，也不打算','试过一次，感觉一般','偶尔会做','经常做，已经熟练','几乎天天如此'],
+        ['零次，想都没想过','有过一两次','时不时会来一下','挺频繁的','已经成了习惯']
+      ],
+      en: [
+        ['Never, and no plan to','Tried once, felt average','Do it occasionally','Do it often, quite skilled','Almost every day'],
+        ['Zero times, never thought about it','Once or twice','From time to time','Pretty frequently','Already a habit']
+      ]
+    }
+  },
+  {
+    q: {
+      zh: s => `如果绝对没人评判，「${s}」你想做到什么程度？`,
+      en: s => `If no one would ever judge you, how far would you take “${s}”?`
+    },
+    sets: {
+      zh: [
+        ['完全不想','想一想就够了','想认真试一次','想经常做','想让它成为生活的一部分'],
+        ['一点兴趣都没有','偶尔幻想一下','想找机会试试','想长期坚持','想彻底活成那样']
+      ],
+      en: [
+        ['Not at all','Just thinking about it is enough','Want to seriously try once','Want to do it often','Want it as part of my life'],
+        ['No interest at all','Fantasy occasionally','Want a chance to try','Want to keep it long-term','Want to live fully as that']
+      ]
+    }
+  },
+  {
+    q: {
+      zh: s => `「${s}」这个念头，出现在你脑子里的频率是？`,
+      en: s => `How often does the thought of “${s}” cross your mind?`
+    },
+    sets: {
+      zh: [
+        ['从来没有过','一年偶尔一两次','每个月都会想','每周都会想','每天都在想'],
+        ['完全没出现过','很久才闪一次','时不时会冒出来','经常浮现','几乎一直在我脑子里']
+      ],
+      en: [
+        ['Never','Once or twice a year','Every month','Every week','Every day'],
+        ['Never appeared','Barely flashes by','Pops up now and then','Appears often','Almost always in my head']
+      ]
+    }
+  },
+  {
+    q: {
+      zh: s => `如果身边人聊起「${s}」，你会？`,
+      en: s => `If people around you bring up “${s}”, you would…?`
+    },
+    sets: {
+      zh: [
+        ['完全插不上话，也不关心','听听就好','会默默记下来','会主动参与讨论','会成为话题中心'],
+        ['装作没听见','随便应付两句','心里会留意','忍不住多说几句','巴不得聊这个']
+      ],
+      en: [
+        ['Can’t relate, don’t care','Just listen','Quietly note it down','Actively join the discussion','Become the center of the topic'],
+        ['Pretend not to hear','Reply casually','Pay attention inside','Can’t help saying more','Wish for nothing more than this topic']
+      ]
+    }
+  }
+];
+
+const SCORES = [0, 1, 2, 4, 6];
+
+/* ================= 防乱答参数 ================= */
+const FAST_MS = 250;
+const STREAK_TRIGGER = 3;
+const COOLDOWN_MS = 1000;
+const INVALID_FAST = 15;
+const INVALID_AVG = 400;
+
+/* ================= 状态 ================= */
+const state = {
+  lang: 'zh',
+  screen: 'start',
+  quiz: [],
+  answers: [],
+  idx: 0,
+  locked: false,
+  onQuiz: false,
+  // 防乱答
+  qStartTime: 0,
+  testStartTime: 0,
+  fastStreak: 0,
+  fastTotal: 0,
+  cooldownUntil: 0,
+  // 结果
+  result: null
+};
+
+function T(){ return I18N[state.lang]; }
+
+/* ================= 背景漂浮 ================= */
+(function initFloaters(){
+  const emojis = ['♡','✦','🌸','💗','✨','🎀','💫','🩷','🍓','💕'];
+  for(let i=0;i<14;i++){
+    const e = document.createElement('div');
+    e.className = 'float-emoji';
+    e.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    e.style.left = Math.random()*100 + 'vw';
+    e.style.fontSize = (14 + Math.random()*16) + 'px';
+    e.style.animationDuration = (14 + Math.random()*16) + 's';
+    e.style.animationDelay = (-Math.random()*26) + 's';
+    document.body.appendChild(e);
+  }
+})();
+
+/* ================= 语言切换 ================= */
+function toggleLang(){
+  state.lang = state.lang === 'zh' ? 'en' : 'zh';
+  applyLang();
+}
+
+function applyLang(){
+  const t = T();
+  const lang = state.lang;
+
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  document.getElementById('app').classList.toggle('lang-en', lang === 'en');
+  document.getElementById('langBtn').textContent = t.langBtn;
+
+  /* --- 开始页 --- */
+  document.getElementById('heroBadge').textContent = t.badge;
+  document.getElementById('heroTitle').textContent = t.title;
+  document.getElementById('heroSub').textContent = t.subtitle;
+  document.querySelectorAll('.stat-lb').forEach((el, i) => {
+    el.textContent = t.statLabels[i];
+  });
+
+  document.getElementById('features').innerHTML =
+    t.features.map(f => `<li>${f}</li>`).join('');
+
+  document.getElementById('stmtHead').textContent = t.stmtHead;
+  document.getElementById('stmtInner').innerHTML =
+    t.stmtBody.map(p => `<p>${p}</p>`).join('') +
+    `<p class="sig">${t.stmtSig}</p>`;
+
+  document.getElementById('btnStart').textContent = t.startBtn;
+  document.getElementById('startFoot').textContent = t.startFoot;
+
+  /* --- 答题页（如果正在进行中） --- */
+  document.getElementById('prev').textContent = t.prevBtn;
+  document.getElementById('hintText').innerHTML = t.hintText;
+  document.getElementById('left').textContent = t.qLeft(80 - state.idx);
+  if(state.onQuiz){
+    document.getElementById('qProgress').innerHTML = t.qProgress(state.idx + 1);
+    render();
+  }
+
+  /* --- 结果页（如果已完成） --- */
+  if(state.result){
+    renderResult();
+  }
+}
+
+/* ================= Toast ================= */
+function toast(msg, duration = 2200){
+  document.querySelectorAll('.toast').forEach(el => el.remove());
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => {
+    el.classList.add('out');
+    setTimeout(() => el.remove(), 340);
+  }, Math.max(duration - 340, 600));
+}
+
+/* ================= 工具 ================= */
+function shuffle(a){
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+function formatTime(ms){
+  const s = Math.round(ms / 1000);
+  const t = T();
+  if(s < 60) return s + ' ' + t.secUnit;
+  const m = Math.floor(s / 60);
+  const r = s % 60;
+  return r === 0 ? m + ' ' + t.minUnit : m + ' ' + t.minUnit + ' ' + r + ' ' + t.secUnit;
+}
+
+/* ================= 粒子 ================= */
+const HEART_EMOJIS = ['♡','💖','💕','🌸','✨','💗','🎀','🩷'];
+function burst(x, y, count = 10, emojis = HEART_EMOJIS){
+  for(let i = 0; i < count; i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    p.style.left = x + 'px';
+    p.style.top  = y + 'px';
+    p.style.fontSize = (12 + Math.random()*14) + 'px';
+    const ang = Math.random() * Math.PI * 2;
+    const dist = 40 + Math.random() * 90;
+    p.style.setProperty('--tx', Math.cos(ang) * dist + 'px');
+    p.style.setProperty('--ty', (Math.sin(ang) * dist - 30) + 'px');
+    p.style.setProperty('--rot', (Math.random()*720 - 360) + 'deg');
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 1200);
+  }
+}
+function confetti(count = 44){
+  const colors = ['#ff8ec4','#e0508f','#a06ae0','#ffb3d9','#c9a8ff','#ffd6a5'];
+  const shapes = ['♡','✦','❀','★','♥'];
+  for(let i = 0; i < count; i++){
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    const isEmoji = Math.random() > 0.5;
+    if(isEmoji){
+      c.textContent = shapes[Math.floor(Math.random()*shapes.length)];
+      c.style.color = colors[Math.floor(Math.random()*colors.length)];
+      c.style.fontSize = (10 + Math.random()*14) + 'px';
+    } else {
+      c.style.width = (5 + Math.random()*6) + 'px';
+      c.style.height = (8 + Math.random()*8) + 'px';
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    }
+    c.style.left = Math.random()*100 + 'vw';
+    c.style.animationDuration = (2.4 + Math.random()*2.2) + 's';
+    c.style.animationDelay = (Math.random()*0.7) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 5500);
+  }
+}
+
+/* ================= 开始 ================= */
+function start(ev){
+  if(ev){
+    const r = ev.currentTarget.getBoundingClientRect();
+    burst(r.left + r.width/2, r.top + r.height/2, 16);
+  }
+
+  const lang = state.lang;
+  const picked = shuffle([...SCENES]).slice(0, 80);
+
+  state.quiz = picked.map(scene => {
+    const lens = LENSES[Math.floor(Math.random()*LENSES.length)];
+    const setArr = lens.sets[lang][Math.floor(Math.random()*lens.sets[lang].length)];
+    return {
+      dim: scene.dim,
+      text: lens.q[lang](scene[lang]),
+      options: setArr.map((txt, i) => ({ text: txt, score: SCORES[i] }))
+    };
+  });
+
+  state.answers = new Array(80).fill(null);
+  state.idx = 0;
+  state.locked = false;
+  state.onQuiz = true;
+  state.screen = 'quiz';
+
+  // 防乱答重置
+  state.qStartTime = 0;
+  state.testStartTime = performance.now();
+  state.fastStreak = 0;
+  state.fastTotal = 0;
+  state.cooldownUntil = 0;
+
+  const hearts = document.getElementById('hearts');
+  hearts.innerHTML = '';
+  for(let i = 0; i < 80; i++){
+    const h = document.createElement('i');
+    hearts.appendChild(h);
+  }
+
+  document.getElementById('screen-start').classList.add('hidden');
+  document.getElementById('screen-quiz').classList.remove('hidden');
+  render();
+}
+
+/* ================= 渲染题目 ================= */
+function render(){
+  const q = state.quiz[state.idx];
+  const t = T();
+
+  document.getElementById('qProgress').innerHTML = t.qProgress(state.idx + 1);
+  document.getElementById('left').textContent = t.qLeft(80 - state.idx);
+  document.getElementById('dim').textContent = t.dimLabel[q.dim];
+  document.getElementById('qnum').textContent = 'Q' + (state.idx + 1);
+  document.getElementById('qtext').textContent = q.text;
+
+  const hs = document.querySelectorAll('#hearts i');
+  hs.forEach((h, i) => {
+    h.classList.toggle('on', i < state.idx);
+    h.classList.toggle('now', i === state.idx);
+  });
+
+  const box = document.getElementById('opts');
+  box.innerHTML = '';
+  q.options.forEach((o, i) => {
+    const b = document.createElement('button');
+    b.className = 'opt' + (state.answers[state.idx] === o.score ? ' sel' : '');
+    b.innerHTML = `<span class="key">${i+1}</span><span>${o.text}</span>`;
+    b.onclick = (e) => choose(i, e);
+    box.appendChild(b);
+  });
+  document.getElementById('prev').disabled = (state.idx === 0);
+
+  const card = document.getElementById('qcard');
+  card.style.animation = 'none';
+  void card.offsetWidth;
+  card.style.animation = 'slideIn .26s ease';
+
+  state.qStartTime = performance.now();
+}
+
+/* ================= 选择 ================= */
+function choose(i, ev){
+  if(state.locked || !state.onQuiz) return;
+  const t = T();
+  const now = performance.now();
+
+  /* 冷却拦截 */
+  if(now < state.cooldownUntil){
+    if(ev && ev.currentTarget){
+      const el = ev.currentTarget;
+      el.classList.remove('shake');
+      void el.offsetWidth;
+      el.classList.add('shake');
+      setTimeout(() => el.classList.remove('shake'), 420);
+    }
+    toast(t.cooldownToasts[Math.floor(Math.random()*t.cooldownToasts.length)], 1500);
+    return;
+  }
+
+  state.locked = true;
+  const elapsed = now - state.qStartTime;
+
+  /* 速度判定 */
+  if(elapsed < FAST_MS){
+    state.fastStreak++;
+    state.fastTotal++;
+    if(state.fastStreak >= STREAK_TRIGGER){
+      state.cooldownUntil = performance.now() + COOLDOWN_MS;
+      state.fastStreak = 0;
+      toast(t.streakToasts[Math.floor(Math.random()*t.streakToasts.length)], 2200);
+      const leftEl = document.getElementById('left');
+      leftEl.classList.add('warn');
+      setTimeout(() => leftEl.classList.remove('warn'), 1400);
+    }
+  } else {
+    state.fastStreak = 0;
+  }
+
+  if(ev && ev.currentTarget){
+    const r = ev.currentTarget.getBoundingClientRect();
+    burst(r.left + r.width * 0.5, r.top + r.height * 0.5, 6);
+  }
+
+  state.answers[state.idx] = state.quiz[state.idx].options[i].score;
+  document.querySelectorAll('.opt').forEach((b, j) => {
+    b.classList.toggle('sel', j === i);
+    if(j !== i) b.classList.add('dim');
+  });
+
+  setTimeout(() => {
+    state.locked = false;
+    if(state.idx === state.quiz.length - 1) finish();
+    else { state.idx++; render(); }
+  }, 190);
+}
+
+function prevQ(){
+  if(state.locked || state.idx === 0) return;
+  state.idx--;
+  render();
+}
+
+document.addEventListener('keydown', e => {
+  if(!state.onQuiz) return;
+  if(e.key >= '1' && e.key <= '5'){
+    const i = Number(e.key) - 1;
+    const opts = document.querySelectorAll('.opt');
+    if(opts[i]) choose(i, { currentTarget: opts[i] });
+  }
+  else if(e.key === 'ArrowLeft' || e.key === 'Backspace'){ e.preventDefault(); prevQ(); }
+});
+
+/* ================= 结算 ================= */
+function finish(){
+  state.onQuiz = false;
+  state.screen = 'result';
+
+  const totalElapsed = performance.now() - state.testStartTime;
+  const total = state.answers.reduce((a,b) => a + (b||0), 0);
+  const index = Math.round(total / 480 * 500);
+  const avgTime = totalElapsed / 80;
+  const invalid = (state.fastTotal >= INVALID_FAST) || (avgTime < INVALID_AVG);
+
+  // 六维统计
+  const dims = {};
+  state.quiz.forEach((q, i) => {
+    if(!dims[q.dim]) dims[q.dim] = { got:0, max:0 };
+    dims[q.dim].got += (state.answers[i] || 0);
+    dims[q.dim].max += 6;
+  });
+  const list = Object.keys(dims).map(k => ({
+    key: k,
+    pct: Math.round(dims[k].got / dims[k].max * 100)
+  })).sort((a,b) => b.pct - a.pct);
+
+  state.result = {
+    index, totalElapsed, avgTime, invalid, list,
+    fastTotal: state.fastTotal
+  };
+
+  document.getElementById('screen-quiz').classList.add('hidden');
+  document.getElementById('screen-result').classList.remove('hidden');
+  window.scrollTo({ top:0, behavior:'smooth' });
+
+  setTimeout(() => confetti(invalid ? 18 : 50), 120);
+
+  renderResult(true);
+}
+
+/* ================= 渲染结果 ================= */
+function renderResult(animateScore){
+  const t = T();
+  const r = state.result;
+  if(!r) return;
+
+  /* 分数滚动 */
+  const scoreEl = document.getElementById('score');
+  if(animateScore){
+    let shown = 0;
+    const target = r.index;
+    const step = Math.max(1, Math.round(target / 40));
+    const tick = setInterval(() => {
+      shown += step;
+      if(shown >= target){ shown = target; clearInterval(tick); }
+      scoreEl.textContent = shown;
+    }, 26);
+  } else {
+    scoreEl.textContent = r.index;
+  }
+
+  document.getElementById('scoreDen').textContent = t.scoreDen;
+
+  const L = t.levels.find(x => r.index <= x.max) || t.levels[t.levels.length-1];
+  document.getElementById('lvl').textContent = L.lvl;
+  document.getElementById('desc').textContent = L.desc;
+
+  /* 统计条 */
+  const avgSec = (r.avgTime / 1000).toFixed(1);
+  document.getElementById('sessionStats').innerHTML =
+    `${t.statTime}<b>${formatTime(r.totalElapsed)}</b>` +
+    `<span class="dot">·</span>` +
+    `${t.statAvg}<b>${avgSec} ${t.secUnit}</b>` +
+    `<span class="dot">·</span>` +
+    `${t.statFast}<b>${r.fastTotal} ${t.statUnit}</b>`;
+
+  /* 警告条 */
+  const warnBox = document.getElementById('warnBox');
+  if(r.invalid){
+    warnBox.classList.remove('hidden');
+    warnBox.innerHTML = t.warnInvalid(r.fastTotal, avgSec);
+  } else if(r.fastTotal >= 6){
+    warnBox.classList.remove('hidden');
+    warnBox.innerHTML = t.warnMild(r.fastTotal);
+  } else {
+    warnBox.classList.add('hidden');
+  }
+
+  /* 六维条 */
+  document.getElementById('barsTitle').textContent = t.barsTitle;
+  document.getElementById('barList').innerHTML = r.list.map(d => `
+    <div class="row">
+      <span class="lb">${t.dimLabel[d.key]}</span>
+      <span class="bar"><i data-w="${d.pct}%"></i></span>
+      <span class="vl">${d.pct}%</span>
+    </div>
+  `).join('');
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.bar i').forEach(el => { el.style.width = el.dataset.w; });
+  });
+
+  /* 高亮 */
+  const top = r.list[0], bottom = r.list[r.list.length-1];
+  document.getElementById('hl').innerHTML =
+    `${t.hlTop} <b>${t.dimLabel[top.key]}（${top.pct}%）</b>，${t.hlBottom} <b>${t.dimLabel[bottom.key]}（${bottom.pct}%）</b>。` +
+    (top.pct - bottom.pct >= 40 ? t.hlStrong : t.hlEven);
+
+  /* 维度解读 */
+  document.getElementById('panelDim').textContent = t.panelDim;
+  document.getElementById('dimDetail').innerHTML = r.list.map(d => {
+    const meta = t.dimMeta[d.key];
+    let lv, cls;
+    if(d.pct >= 60){ lv = t.lvHigh; cls = 'b-high'; }
+    else if(d.pct >= 30){ lv = t.lvMid; cls = 'b-mid'; }
+    else { lv = t.lvLow; cls = 'b-low'; }
+    const txt = d.pct >= 60 ? meta.high : (d.pct >= 30 ? meta.mid : meta.low);
+    return `<div class="dim-item">
+      <div class="dn">${t.dimLabel[d.key]}<em>${meta.icon}</em></div>
+      <div class="dt"><span class="badge ${cls}">${lv} · ${d.pct}%</span>${txt}</div>
+    </div>`;
+  }).join('');
+
+  /* 三面板 */
+  document.getElementById('panelAnalysis').textContent = t.panelAnalysis;
+  document.getElementById('panelTip').textContent = t.panelTip;
+  document.getElementById('panelNext').textContent = t.panelNext;
+  document.getElementById('pAnalysis').textContent = L.analysis;
+  document.getElementById('pTip').textContent = L.tip;
+  document.getElementById('pNext').innerHTML = L.next.map(x => `<li>${x}</li>`).join('');
+
+  document.getElementById('footnote').innerHTML = t.footnote;
+  document.getElementById('againBtn').textContent = t.againBtn;
+}
+
+/* ================= 折叠声明 ================= */
+function toggleStmt(){
+  document.getElementById('statement').classList.toggle('open');
+}
+
+/* ================= 初始化 ================= */
+applyLang();
+</script>
+</body>
+</html>
