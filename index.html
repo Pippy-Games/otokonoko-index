@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>男娘指数测试 · Femboy Index Test</title>
+<title>男娘潜力测试 · Femboy Potential Test</title>
+<meta name="description" content="从题库中随机抽取 80 题，测出你的男娘潜力值（满潜力 500）。包含六维倾向分析、中英双语支持与防乱答机制。仅供娱乐。">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
 
@@ -206,7 +207,7 @@
     max-height:0;overflow:hidden;
     transition:max-height .45s cubic-bezier(.3,1,.4,1);
   }
-  .statement.open .stmt-body{max-height:640px}
+  .statement.open .stmt-body{max-height:700px}
   .stmt-inner{
     padding:14px 18px 16px;
     border-top:1px dashed rgba(224,80,143,.16);
@@ -260,7 +261,6 @@
   .start-foot::before{content:'♡ ';color:#ff8ec4}
   .start-foot::after{content:' ♡';color:#ff8ec4}
 
-  /* ============ 通用按钮 ============ */
   .btn{
     display:block;width:100%;padding:15px;border:none;border-radius:16px;
     background:linear-gradient(90deg,#e0508f,#c23d78);color:#fff;
@@ -512,7 +512,6 @@
 
 <div class="app" id="app">
 
-  <!-- 语言切换 -->
   <button class="lang-btn" id="langBtn" onclick="toggleLang()">🌐 EN</button>
 
   <!-- ============ 开始页 ============ -->
@@ -522,7 +521,7 @@
 
       <div class="title-wrap">
         <span class="float-deco l">🌸</span>
-        <h1 class="hero-title" id="heroTitle">男娘指数测试</h1>
+        <h1 class="hero-title" id="heroTitle">男娘潜力测试</h1>
         <span class="float-deco r">💖</span>
       </div>
 
@@ -530,9 +529,9 @@
     </div>
 
     <div class="stats">
-      <div class="stat" data-emoji="📚"><b>500</b><span class="stat-lb" data-i="0">题库总量</span></div>
-      <div class="stat" data-emoji="🎀"><b>80</b><span class="stat-lb" data-i="1">随机抽题</span></div>
-      <div class="stat" data-emoji="✨"><b>500</b><span class="stat-lb" data-i="2">满指数</span></div>
+      <div class="stat" data-emoji="📚"><b>80</b><span class="stat-lb" data-i="0">随机抽题</span></div>
+      <div class="stat" data-emoji="🎀"><b>6</b><span class="stat-lb" data-i="1">维度分析</span></div>
+      <div class="stat" data-emoji="✨"><b>500</b><span class="stat-lb" data-i="2">满潜力值</span></div>
     </div>
 
     <ul class="features" id="features"></ul>
@@ -617,17 +616,17 @@
 </div>
 
 <script>
-/* ================= I18N 数据 ================= */
+/* ================= I18N ================= */
 const I18N = {
   zh: {
     langBtn: '🌐 EN',
     badge: '500 题库 · 随机抽题',
-    title: '男娘指数测试',
+    title: '男娘潜力测试',
     subtitle: '测测你心里那个她，到底住得有多深 ～',
-    statLabels: ['题库总量', '随机抽题', '满指数'],
+    statLabels: ['随机抽题', '维度分析', '满潜力值'],
     features: [
-      '从 100 个场景 × 5 种问法中随机抽取 80 题',
-      '点选即切题，键盘 1~5 快速作答，← 返回上一题',
+      '80 道题从 500+ 题库中随机抽取，每次都不一样',
+      '一半直白题，一半隐晦题，混在一起看不出套路',
       '⚡ 内置防乱答机制：秒答过多会被提醒，结果可能不准',
       '结果含六维倾向、维度解读、温馨提示与下一步建议'
     ],
@@ -655,12 +654,8 @@ const I18N = {
     footnote: '本测试仅供娱乐，不构成任何心理学诊断。<br>无论分数多少，做自己最舒服的样子就好 ♡',
     againBtn: '再测一次',
 
-    statTime: '总用时',
-    statAvg: '平均每题',
-    statFast: '秒答',
-    statUnit: '题',
-    secUnit: '秒',
-    minUnit: '分',
+    statTime: '总用时', statAvg: '平均每题', statFast: '秒答', statUnit: '题',
+    secUnit: '秒', minUnit: '分',
 
     warnInvalid: (f, a) => `⚠️ <b>本次答题速度异常</b>，共检测到 <b>${f}</b> 道秒答题，平均每题仅 <b>${a}</b> 秒。测试结果的参考性较低，建议重新认真作答一次。`,
     warnMild: f => `⏱️ 你有 <b>${f}</b> 道题作答较快，虽然结果有效，但如果想更准确，下次可以稍微慢一点。`,
@@ -757,13 +752,13 @@ const I18N = {
 
   en: {
     langBtn: '🌐 中文',
-    badge: '500 QUESTIONS · RANDOM DRAW',
-    title: 'Femboy Index Test',
+    badge: 'RANDOM · BILINGUAL',
+    title: 'Femboy Potential Test',
     subtitle: 'Measure how deep she lives inside you ～',
-    statLabels: ['Question Bank', 'Per Draw', 'Max Index'],
+    statLabels: ['Random Qs', 'Dimensions', 'Max Potential'],
     features: [
-      '80 questions drawn randomly from 100 scenarios × 5 angles',
-      'Tap to advance · Keys 1–5 to answer · ← to go back',
+      '80 questions drawn randomly from a 500+ bank — never the same twice',
+      'Half direct, half subtle — mixed together so you can’t guess the pattern',
       '⚡ Anti-rush system: too many instant answers will trigger a warning',
       'Results include six-dimension profile, interpretations, tips, and next steps'
     ],
@@ -791,12 +786,8 @@ const I18N = {
     footnote: 'This test is for entertainment only and is not a psychological diagnosis.<br>Whatever your score, the best version of you is the one that feels most comfortable ♡',
     againBtn: 'Take Again',
 
-    statTime: 'Total',
-    statAvg: 'Avg / Q',
-    statFast: 'Instant',
-    statUnit: '',
-    secUnit: 's',
-    minUnit: 'm',
+    statTime: 'Total', statAvg: 'Avg / Q', statFast: 'Instant', statUnit: '',
+    secUnit: 's', minUnit: 'm',
 
     warnInvalid: (f, a) => `⚠️ <b>Abnormal response speed detected.</b> ${f} instant answers were logged, averaging only <b>${a}s</b> per question. The reliability of this result is low — please retake the test carefully.`,
     warnMild: f => `⏱️ You answered <b>${f}</b> questions very quickly. The result is still valid, but for better accuracy, consider slowing down next time.`,
@@ -892,9 +883,8 @@ const I18N = {
   }
 };
 
-/* ================= 场景（双语） ================= */
+/* ================= 直白题库（100 场景） ================= */
 const SCENES = [
-  // 穿搭 / Style
   { zh:'试穿一条裙子', en:'Try on a skirt', dim:'穿搭' },
   { zh:'穿上JK制服', en:'Wear a JK uniform', dim:'穿搭' },
   { zh:'试一套洛丽塔', en:'Try on a Lolita dress', dim:'穿搭' },
@@ -916,7 +906,6 @@ const SCENES = [
   { zh:'收藏一条小裙子', en:'Save a cute dress to your wishlist', dim:'穿搭' },
   { zh:'拍一张女装照', en:'Take a crossdressing photo', dim:'穿搭' },
 
-  // 妆容 / Makeup
   { zh:'画眼线', en:'Draw eyeliner', dim:'妆容' },
   { zh:'涂口红', en:'Apply lipstick', dim:'妆容' },
   { zh:'打底遮瑕', en:'Apply foundation and concealer', dim:'妆容' },
@@ -935,7 +924,6 @@ const SCENES = [
   { zh:'研究自己的脸型', en:'Study your own face shape', dim:'妆容' },
   { zh:'种草一堆化妆品', en:'Get tempted by tons of cosmetics', dim:'妆容' },
 
-  // 身体 / Body
   { zh:'刮腿毛', en:'Shave your leg hair', dim:'身体' },
   { zh:'处理胡子', en:'Deal with facial hair', dim:'身体' },
   { zh:'涂身体乳', en:'Apply body lotion', dim:'身体' },
@@ -954,7 +942,6 @@ const SCENES = [
   { zh:'早睡养生', en:'Sleep early for wellness', dim:'身体' },
   { zh:'矫正体态', en:'Correct your posture', dim:'身体' },
 
-  // 气质 / Vibe
   { zh:'把声音放柔', en:'Soften your voice', dim:'气质' },
   { zh:'调整走路姿势', en:'Adjust your walk', dim:'气质' },
   { zh:'坐着并腿', en:'Sit with your legs together', dim:'气质' },
@@ -973,7 +960,6 @@ const SCENES = [
   { zh:'双手捧脸', en:'Cup your face with both hands', dim:'气质' },
   { zh:'说话带尾音', en:'Add a trailing tone when speaking', dim:'气质' },
 
-  // 心理 / Mind
   { zh:'被叫姐姐', en:'Being called “jiejie” (big sister)', dim:'心理' },
   { zh:'被叫妹妹', en:'Being called “meimei” (little sister)', dim:'心理' },
   { zh:'被叫小可爱', en:'Being called “cute little one”', dim:'心理' },
@@ -990,7 +976,6 @@ const SCENES = [
   { zh:'觉得自己有两面', en:'Feeling you have two sides', dim:'心理' },
   { zh:'想被人保护', en:'Wanting to be protected', dim:'心理' },
 
-  // 社交 / Social
   { zh:'和女生做闺蜜', en:'Being besties with girls', dim:'社交' },
   { zh:'加入男娘群', en:'Joining a femboy group', dim:'社交' },
   { zh:'把女装照发到网上', en:'Posting crossdressing photos online', dim:'社交' },
@@ -1007,13 +992,153 @@ const SCENES = [
   { zh:'公开自己的喜好', en:'Publicly sharing your preferences', dim:'社交' }
 ];
 
-/* ================= 问法视角（双语） ================= */
+/* ================= 隐晦题库 ================= */
+const INDIRECT = [
+  { dim:'穿搭', q:{zh:'逛街路过女装橱窗，你会…',en:'Walking past a women’s boutique window, you…'},
+    o:{zh:['完全不会注意到','余光扫过，不会停留','会多看两眼，但不会停','会放慢脚步看看款式','会想象自己穿上的样子'],
+       en:['Wouldn’t even notice','A glance, no pause','Look twice, keep walking','Slow down and check the styles','Picture yourself wearing it']} },
+  { dim:'穿搭', q:{zh:'刷到穿搭视频时，你通常…',en:'When a styling video shows up, you…'},
+    o:{zh:['直接划走','看两眼就划走','会看完','会点赞收藏','会反复看，研究搭配细节'],
+       en:['Scroll past','Watch a bit then scroll','Watch it fully','Like and save it','Rewatch and study the details']} },
+  { dim:'穿搭', q:{zh:'换季整理衣柜时，你的状态是…',en:'When reorganizing your closet each season, you…'},
+    o:{zh:['随便塞一塞','按季节分个类','会顺便搭配几套','会拍照记录','会试穿一遍再决定留哪些'],
+       en:['Just stuff it in','Sort by season','Match a few outfits','Take photos for reference','Try everything on before deciding']} },
+  { dim:'穿搭', q:{zh:'有人夸你今天穿得好看，你会…',en:'When someone says you look good today, you…'},
+    o:{zh:['没什么感觉','说声谢谢','会有点开心','会记住这句夸奖','会想着下次穿得更用心'],
+       en:['Feel nothing','Say thanks','Feel a bit happy','Remember the compliment','Think about doing even better next time']} },
+  { dim:'穿搭', q:{zh:'对衣服的版型和布料，你的态度是…',en:'How much do you care about cut and fabric?'},
+    o:{zh:['完全不关心，能穿就行','大概知道什么舒服','会摸一下手感','会特意挑版型好的','会为了一件版型好的多花钱'],
+       en:['Not at all — if it fits, fine','Roughly know what’s comfy','Feel the texture','Specifically pick good cuts','Pay extra for the right cut']} },
+  { dim:'穿搭', q:{zh:'你衣柜里的颜色分布是…',en:'Your closet’s color palette is…'},
+    o:{zh:['各种颜色都有','没什么规律','有几个固定的颜色','某几个颜色特别多','有很明显的色系偏好'],
+       en:['All sorts of colors','No pattern','A few fixed colors','A couple dominate','A very clear palette preference']} },
+  { dim:'穿搭', q:{zh:'出门前你花在「穿什么」上的时间是…',en:'How long do you spend picking an outfit?'},
+    o:{zh:['随手抓一件','一两分钟','几分钟','会认真挑','会试好几套再决定'],
+       en:['Grab anything','A minute or two','A few minutes','Pick carefully','Try several before deciding']} },
+  { dim:'穿搭', q:{zh:'逛街时你最常进的店是…',en:'The store you most often walk into is…'},
+    o:{zh:['数码 / 运动','书店 / 杂货','男装','中性风','会路过并看一眼的店'],
+       en:['Tech / sports','Books / lifestyle','Menswear','Gender-neutral','Stores you pass and glance at']} },
+
+  { dim:'妆容', q:{zh:'拍完照后，你会…',en:'After taking a photo, you…'},
+    o:{zh:['直接发，不修','会拍好几张挑一张','会调一下亮度','会用滤镜','会修到自己满意'],
+       en:['Post as-is','Take several, pick one','Adjust brightness','Use a filter','Retouch until satisfied']} },
+  { dim:'妆容', q:{zh:'你手机里的修图 App 数量…',en:'How many photo-editing apps do you have?'},
+    o:{zh:['一个都没有','手机自带够了','有一个常用的','有两三个','有专门的工具'],
+       en:['None','Built-in is enough','One go-to','Two or three','Dedicated tools']} },
+  { dim:'妆容', q:{zh:'洗完脸之后，你会…',en:'After washing your face, you…'},
+    o:{zh:['擦干就行了','偶尔涂点东西','有固定的护肤流程','会认真涂好几层','会对着镜子检查皮肤状态'],
+       en:['Just dry it','Sometimes apply something','Have a routine','Layer several products','Check your skin in the mirror']} },
+  { dim:'妆容', q:{zh:'对自己脸上的各个部位…',en:'About the features on your face…'},
+    o:{zh:['没仔细看过','知道大概什么样','有满意和不满意的地方','会研究怎么扬长避短','认真研究过自己的脸型'],
+       en:['Never really looked','Rough idea','Have likes and dislikes','Study how to enhance','Seriously studied your face shape']} },
+  { dim:'妆容', q:{zh:'看别人时，你第一眼会看…',en:'When you look at someone, your first glance goes to…'},
+    o:{zh:['整体感觉','穿着','气质','五官','妆容细节'],
+       en:['Overall vibe','Outfit','Presence','Features','Makeup details']} },
+  { dim:'妆容', q:{zh:'出门前打理自己的时间…',en:'Time spent getting ready before going out…'},
+    o:{zh:['五分钟搞定','十分钟左右','会挑一下衣服','会整理头发和细节','会花二十分钟以上'],
+       en:['Five minutes','About ten','Pick an outfit','Fix hair and details','Twenty minutes or more']} },
+  { dim:'妆容', q:{zh:'对「皮肤状态」这件事…',en:'About "skin condition"…'},
+    o:{zh:['完全不在意','偶尔注意一下','会在意','比较在意','每天都会观察'],
+       en:['Don’t care','Notice occasionally','Care','Care a lot','Check daily']} },
+
+  { dim:'身体', q:{zh:'洗澡的时候，你会…',en:'In the shower, you…'},
+    o:{zh:['快速洗完','正常洗','会顺便看看自己','会仔细看镜子里的自己','会对身体有评价和想法'],
+       en:['Quick wash','Normal','Glance at yourself','Look closely in the mirror','Evaluate and think about it']} },
+  { dim:'身体', q:{zh:'对自己的腿，你…',en:'About your legs…'},
+    o:{zh:['没评价过','知道大概情况','有过「想改一改」的念头','会在意腿型','认真研究过怎么改善'],
+       en:['Never judged','Roughly aware','Thought about changing them','Care about the shape','Studied how to improve']} },
+  { dim:'身体', q:{zh:'你称体重的频率是…',en:'How often do you weigh yourself?'},
+    o:{zh:['基本不称','偶尔称','一个月几次','每周称','几乎每天称'],
+       en:['Almost never','Occasionally','A few times a month','Weekly','Almost daily']} },
+  { dim:'身体', q:{zh:'洗完澡你会涂什么？',en:'After a shower, what do you apply?'},
+    o:{zh:['什么都不涂','偶尔涂','会涂面霜','会涂身体乳','有完整的护理流程'],
+       en:['Nothing','Sometimes something','Face cream','Body lotion','A full routine']} },
+  { dim:'身体', q:{zh:'对自己身体最想改变的地方…',en:'The part of your body you most want to change…'},
+    o:{zh:['没什么想改的','想更健康一点','想瘦一点','想改某个具体部位','心里有一个很具体的目标'],
+       en:['Nothing','Be healthier','Be slimmer','A specific area','A very specific goal image']} },
+  { dim:'身体', q:{zh:'用过除毛相关的产品吗？',en:'Have you used hair-removal products?'},
+    o:{zh:['完全没用过','只处理过胡子','处理过其他部位','用过脱毛膏','有固定的除毛习惯'],
+       en:['Never','Only facial hair','Other areas','Used creams','Have a regular routine']} },
+  { dim:'身体', q:{zh:'对「变白」这件事…',en:'About "getting fairer"…'},
+    o:{zh:['完全不在意','顺其自然','偶尔会想','会做点什么','有在坚持的方法'],
+       en:['Don’t care','Whatever happens','Think about it sometimes','Do something','Have a routine']} },
+  { dim:'身体', q:{zh:'穿衣服的时候，你最在意哪个部位？',en:'When dressing, which part do you care most about?'},
+    o:{zh:['不在意','整体效果','肩或胸','腰或臀','腿或整体线条'],
+       en:['None','Overall look','Shoulders or chest','Waist or hips','Legs or overall lines']} },
+
+  { dim:'气质', q:{zh:'听过自己说话的录音吗？',en:'Have you heard a recording of your own voice?'},
+    o:{zh:['没有，也不想听','听过，觉得很奇怪','听过，没什么感觉','听过，会注意自己的语气','会录下来研究怎么说话好听'],
+       en:['No, and don’t want to','Yes, felt weird','Yes, no feeling','Yes, notice my tone','Record to study how to sound better']} },
+  { dim:'气质', q:{zh:'笑的时候，你会…',en:'When you laugh, you…'},
+    o:{zh:['想怎么笑就怎么笑','会下意识控制','会注意声音大小','会注意表情','会练习怎么笑更好看'],
+       en:['Laugh freely','Instinctively control','Mind the volume','Mind the expression','Practice a better laugh']} },
+  { dim:'气质', q:{zh:'拍照的时候，手会怎么放？',en:'In photos, your hands…'},
+    o:{zh:['不知道往哪放','随便放','会插兜','会摆姿势','有固定的「好看」手势'],
+       en:['Don’t know where to put them','Anywhere','In pockets','Pose them','Have a signature gesture']} },
+  { dim:'气质', q:{zh:'走路的时候，你会…',en:'When you walk, you…'},
+    o:{zh:['走自己的路','会注意别撞到人','会注意脚步','会注意姿势','会留意别人怎么走'],
+       en:['Just walk','Avoid bumping into people','Notice your steps','Mind your posture','Notice how others walk']} },
+  { dim:'气质', q:{zh:'别人夸你「可爱」，你会…',en:'When someone calls you "cute", you…'},
+    o:{zh:['不太喜欢','没什么感觉','有点意外','会有点开心','会很受用'],
+       en:['Dislike it','No feeling','A bit surprised','Feel a little happy','Really enjoy it']} },
+  { dim:'气质', q:{zh:'坐着的时候，你的姿势是…',en:'When sitting, your posture is…'},
+    o:{zh:['怎么舒服怎么坐','会坐直','会注意腿的位置','会并腿','会注意整个人的姿态'],
+       en:['Whatever’s comfortable','Sit upright','Mind your legs','Keep legs together','Mind your whole posture']} },
+  { dim:'气质', q:{zh:'你说话的语速和音量…',en:'Your speaking pace and volume…'},
+    o:{zh:['偏快偏大','正常','偏慢','偏轻','会根据对象调整'],
+       en:['Fast and loud','Normal','Slow','Soft','Adjust by listener']} },
+
+  { dim:'心理', q:{zh:'玩游戏选角色的时候，你…',en:'When choosing a game character, you…'},
+    o:{zh:['永远选男角色','看强度选','看外形选','有时会选女角色','基本都选女角色'],
+       en:['Always male','By stats','By look','Sometimes female','Almost always female']} },
+  { dim:'心理', q:{zh:'看小说或剧的时候，你代入谁？',en:'In novels or shows, who do you identify with?'},
+    o:{zh:['代入男主','谁都不代入','看剧情','有时会代入女主','基本代入女主'],
+       en:['The male lead','No one','Just the plot','Sometimes the female lead','Mostly the female lead']} },
+  { dim:'心理', q:{zh:'有没有想过「如果我是另一种性别」？',en:'Have you thought "what if I were another gender"?'},
+    o:{zh:['从来没有','一闪而过','偶尔会想','经常想','认真想过'],
+       en:['Never','Flashed once','Sometimes','Often','Seriously considered']} },
+  { dim:'心理', q:{zh:'对自己现在的名字，你…',en:'About your current name, you…'},
+    o:{zh:['挺满意的','没什么感觉','觉得一般','想过换一个','心里有一个更喜欢的名字'],
+       en:['Quite like it','No feeling','It’s fine','Thought about changing','Have a preferred name in mind']} },
+  { dim:'心理', q:{zh:'照镜子的时候，你会…',en:'In front of a mirror, you…'},
+    o:{zh:['只是确认一下形象','没什么特别感觉','会稍微看看','会看很久','有时觉得镜子里的人有点陌生'],
+       en:['Just check your look','No special feeling','Look a bit','Look for a while','Sometimes feel the person looks unfamiliar']} },
+  { dim:'心理', q:{zh:'关于性别相关的话题，你…',en:'About gender-related topics, you…'},
+    o:{zh:['不太关注','知道但不参与','会看一些讨论','会主动了解','有很多自己的想法'],
+       en:['Don’t pay attention','Aware but don’t join','Read some discussions','Actively learn','Have many thoughts of your own']} },
+  { dim:'心理', q:{zh:'你的手机壁纸是…',en:'Your phone wallpaper is…'},
+    o:{zh:['默认壁纸','风景 / 抽象','动漫角色','好看的插画','自己或喜欢的人'],
+       en:['Default','Scenery / abstract','Anime character','Nice illustration','Yourself or someone you like']} },
+  { dim:'心理', q:{zh:'如果问你「最想变成什么样的人」，你会说…',en:'If asked "who do you most want to become", you’d say…'},
+    o:{zh:['更成功的人','更自由的人','更好看的人','更像自己的人','心里有一个很具体的形象'],
+       en:['More successful','Freer','Better looking','More myself','A very specific image in mind']} },
+
+  { dim:'社交', q:{zh:'和女生聊天，你…',en:'Chatting with girls, you…'},
+    o:{zh:['不太自在','和和男生差不多','挺轻松的','比和男生聊天舒服','更愿意和女生聊'],
+       en:['Not very comfortable','Same as with guys','Fairly relaxed','More comfortable than with guys','Prefer chatting with girls']} },
+  { dim:'社交', q:{zh:'在群里的发言风格是…',en:'Your style in group chats is…'},
+    o:{zh:['很少发言','正常说话','偶尔开开玩笑','会用一些可爱的表情','说话语气偏软'],
+       en:['Rarely speak','Normal','Joke occasionally','Use cute emojis','A softer tone']} },
+  { dim:'社交', q:{zh:'别人对你的印象通常是…',en:'People usually describe you as…'},
+    o:{zh:['挺正常的','话不多','有点特别','不太像典型的男生','说不上来，反正不太一样'],
+       en:['Pretty normal','Quiet','A bit different','Not a typical guy','Hard to say — just different']} },
+  { dim:'社交', q:{zh:'和异性相处，你…',en:'Around the opposite sex, you…'},
+    o:{zh:['比较拘谨','还行','挺自然的','比和同性相处自在','更愿意和异性待在一起'],
+       en:['Reserved','Okay','Quite natural','More at ease than with same sex','Prefer being around them']} },
+  { dim:'社交', q:{zh:'对「男生之间的社交活动」（喝酒、打球、开黑），你…',en:'About typical "guy hangouts" (drinking, sports, gaming), you…'},
+    o:{zh:['很享受','还行','会参加但不投入','不太感兴趣','基本不参与'],
+       en:['Really enjoy','It’s fine','Join but not into it','Not very interested','Rarely join']} },
+  { dim:'社交', q:{zh:'别人夸你什么你最开心？',en:'Which compliment makes you happiest?'},
+    o:{zh:['帅','靠谱','聪明','好看','可爱'],
+       en:['Handsome','Reliable','Smart','Good-looking','Cute']} },
+  { dim:'社交', q:{zh:'你的社交头像是…',en:'Your profile picture is…'},
+    o:{zh:['真人照片','风景 / 物品','梗图','动漫角色','一个可爱的形象'],
+       en:['A real photo of you','Scenery / objects','A meme','An anime character','A cute figure']} }
+];
+
+/* ================= 问法视角 ================= */
 const LENSES = [
-  {
-    q: {
-      zh: s => `关于「${s}」，你的真实态度是？`,
-      en: s => `What’s your honest attitude toward “${s}”?`
-    },
+  { q: { zh: s => `关于「${s}」，你的真实态度是？`, en: s => `What’s your honest attitude toward “${s}”?` },
     sets: {
       zh: [
         ['完全排斥，想都不会想','无感，跟我没什么关系','有点好奇，但仅此而已','挺喜欢的，会主动关注','这就是我的日常'],
@@ -1025,11 +1150,7 @@ const LENSES = [
       ]
     }
   },
-  {
-    q: {
-      zh: s => `过去一年里，「${s}」这件事你做过吗？`,
-      en: s => `In the past year, have you done “${s}”?`
-    },
+  { q: { zh: s => `过去一年里，「${s}」这件事你做过吗？`, en: s => `In the past year, have you done “${s}”?` },
     sets: {
       zh: [
         ['从没做过，也不打算','试过一次，感觉一般','偶尔会做','经常做，已经熟练','几乎天天如此'],
@@ -1041,11 +1162,7 @@ const LENSES = [
       ]
     }
   },
-  {
-    q: {
-      zh: s => `如果绝对没人评判，「${s}」你想做到什么程度？`,
-      en: s => `If no one would ever judge you, how far would you take “${s}”?`
-    },
+  { q: { zh: s => `如果绝对没人评判，「${s}」你想做到什么程度？`, en: s => `If no one would ever judge you, how far would you take “${s}”?` },
     sets: {
       zh: [
         ['完全不想','想一想就够了','想认真试一次','想经常做','想让它成为生活的一部分'],
@@ -1057,11 +1174,7 @@ const LENSES = [
       ]
     }
   },
-  {
-    q: {
-      zh: s => `「${s}」这个念头，出现在你脑子里的频率是？`,
-      en: s => `How often does the thought of “${s}” cross your mind?`
-    },
+  { q: { zh: s => `「${s}」这个念头，出现在你脑子里的频率是？`, en: s => `How often does the thought of “${s}” cross your mind?` },
     sets: {
       zh: [
         ['从来没有过','一年偶尔一两次','每个月都会想','每周都会想','每天都在想'],
@@ -1073,11 +1186,7 @@ const LENSES = [
       ]
     }
   },
-  {
-    q: {
-      zh: s => `如果身边人聊起「${s}」，你会？`,
-      en: s => `If people around you bring up “${s}”, you would…?`
-    },
+  { q: { zh: s => `如果身边人聊起「${s}」，你会？`, en: s => `If people around you bring up “${s}”, you would…?` },
     sets: {
       zh: [
         ['完全插不上话，也不关心','听听就好','会默默记下来','会主动参与讨论','会成为话题中心'],
@@ -1103,19 +1212,16 @@ const INVALID_AVG = 400;
 /* ================= 状态 ================= */
 const state = {
   lang: 'zh',
-  screen: 'start',
   quiz: [],
   answers: [],
   idx: 0,
   locked: false,
   onQuiz: false,
-  // 防乱答
   qStartTime: 0,
   testStartTime: 0,
   fastStreak: 0,
   fastTotal: 0,
   cooldownUntil: 0,
-  // 结果
   result: null
 };
 
@@ -1150,7 +1256,6 @@ function applyLang(){
   document.getElementById('app').classList.toggle('lang-en', lang === 'en');
   document.getElementById('langBtn').textContent = t.langBtn;
 
-  /* --- 开始页 --- */
   document.getElementById('heroBadge').textContent = t.badge;
   document.getElementById('heroTitle').textContent = t.title;
   document.getElementById('heroSub').textContent = t.subtitle;
@@ -1169,16 +1274,15 @@ function applyLang(){
   document.getElementById('btnStart').textContent = t.startBtn;
   document.getElementById('startFoot').textContent = t.startFoot;
 
-  /* --- 答题页（如果正在进行中） --- */
   document.getElementById('prev').textContent = t.prevBtn;
   document.getElementById('hintText').innerHTML = t.hintText;
   document.getElementById('left').textContent = t.qLeft(80 - state.idx);
+
   if(state.onQuiz){
     document.getElementById('qProgress').innerHTML = t.qProgress(state.idx + 1);
     render();
   }
 
-  /* --- 结果页（如果已完成） --- */
   if(state.result){
     renderResult();
   }
@@ -1266,9 +1370,10 @@ function start(ev){
   }
 
   const lang = state.lang;
-  const picked = shuffle([...SCENES]).slice(0, 80);
 
-  state.quiz = picked.map(scene => {
+  /* 40 道直白题 */
+  const directPicked = shuffle([...SCENES]).slice(0, 40);
+  const directQs = directPicked.map(scene => {
     const lens = LENSES[Math.floor(Math.random()*LENSES.length)];
     const setArr = lens.sets[lang][Math.floor(Math.random()*lens.sets[lang].length)];
     return {
@@ -1278,13 +1383,22 @@ function start(ev){
     };
   });
 
+  /* 40 道隐晦题 */
+  const indirectPicked = shuffle([...INDIRECT]).slice(0, 40);
+  const indirectQs = indirectPicked.map(item => ({
+    dim: item.dim,
+    text: item.q[lang],
+    options: item.o[lang].map((txt, i) => ({ text: txt, score: SCORES[i] }))
+  }));
+
+  /* 合并打乱 */
+  state.quiz = shuffle([...directQs, ...indirectQs]);
+
   state.answers = new Array(80).fill(null);
   state.idx = 0;
   state.locked = false;
   state.onQuiz = true;
-  state.screen = 'quiz';
 
-  // 防乱答重置
   state.qStartTime = 0;
   state.testStartTime = performance.now();
   state.fastStreak = 0;
@@ -1345,7 +1459,6 @@ function choose(i, ev){
   const t = T();
   const now = performance.now();
 
-  /* 冷却拦截 */
   if(now < state.cooldownUntil){
     if(ev && ev.currentTarget){
       const el = ev.currentTarget;
@@ -1361,7 +1474,6 @@ function choose(i, ev){
   state.locked = true;
   const elapsed = now - state.qStartTime;
 
-  /* 速度判定 */
   if(elapsed < FAST_MS){
     state.fastStreak++;
     state.fastTotal++;
@@ -1414,7 +1526,6 @@ document.addEventListener('keydown', e => {
 /* ================= 结算 ================= */
 function finish(){
   state.onQuiz = false;
-  state.screen = 'result';
 
   const totalElapsed = performance.now() - state.testStartTime;
   const total = state.answers.reduce((a,b) => a + (b||0), 0);
@@ -1422,7 +1533,6 @@ function finish(){
   const avgTime = totalElapsed / 80;
   const invalid = (state.fastTotal >= INVALID_FAST) || (avgTime < INVALID_AVG);
 
-  // 六维统计
   const dims = {};
   state.quiz.forEach((q, i) => {
     if(!dims[q.dim]) dims[q.dim] = { got:0, max:0 };
@@ -1454,7 +1564,6 @@ function renderResult(animateScore){
   const r = state.result;
   if(!r) return;
 
-  /* 分数滚动 */
   const scoreEl = document.getElementById('score');
   if(animateScore){
     let shown = 0;
@@ -1475,7 +1584,6 @@ function renderResult(animateScore){
   document.getElementById('lvl').textContent = L.lvl;
   document.getElementById('desc').textContent = L.desc;
 
-  /* 统计条 */
   const avgSec = (r.avgTime / 1000).toFixed(1);
   document.getElementById('sessionStats').innerHTML =
     `${t.statTime}<b>${formatTime(r.totalElapsed)}</b>` +
@@ -1484,7 +1592,6 @@ function renderResult(animateScore){
     `<span class="dot">·</span>` +
     `${t.statFast}<b>${r.fastTotal} ${t.statUnit}</b>`;
 
-  /* 警告条 */
   const warnBox = document.getElementById('warnBox');
   if(r.invalid){
     warnBox.classList.remove('hidden');
@@ -1496,7 +1603,6 @@ function renderResult(animateScore){
     warnBox.classList.add('hidden');
   }
 
-  /* 六维条 */
   document.getElementById('barsTitle').textContent = t.barsTitle;
   document.getElementById('barList').innerHTML = r.list.map(d => `
     <div class="row">
@@ -1509,13 +1615,11 @@ function renderResult(animateScore){
     document.querySelectorAll('.bar i').forEach(el => { el.style.width = el.dataset.w; });
   });
 
-  /* 高亮 */
   const top = r.list[0], bottom = r.list[r.list.length-1];
   document.getElementById('hl').innerHTML =
     `${t.hlTop} <b>${t.dimLabel[top.key]}（${top.pct}%）</b>，${t.hlBottom} <b>${t.dimLabel[bottom.key]}（${bottom.pct}%）</b>。` +
     (top.pct - bottom.pct >= 40 ? t.hlStrong : t.hlEven);
 
-  /* 维度解读 */
   document.getElementById('panelDim').textContent = t.panelDim;
   document.getElementById('dimDetail').innerHTML = r.list.map(d => {
     const meta = t.dimMeta[d.key];
@@ -1530,7 +1634,6 @@ function renderResult(animateScore){
     </div>`;
   }).join('');
 
-  /* 三面板 */
   document.getElementById('panelAnalysis').textContent = t.panelAnalysis;
   document.getElementById('panelTip').textContent = t.panelTip;
   document.getElementById('panelNext').textContent = t.panelNext;
